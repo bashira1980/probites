@@ -1,0 +1,14 @@
+# PDFs and documents
+*.pdf
+
+# Backup files
+*.bak
+
+# macOS
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might contain sensitive data
+*.env
