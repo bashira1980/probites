@@ -29,19 +29,24 @@
             scroll-behavior: smooth;
         }
 
-        /* Video Hero Section */
+        /* Video Hero Section - Full Page */
         .video-hero {
             position: relative;
             width: 100%;
-            height: 80vh;
-            min-height: 600px;
+            height: 100vh;
             overflow: hidden;
             background: #000;
         }
 
         .video-player {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
             object-fit: cover;
         }
 
@@ -132,10 +137,10 @@
         </div>
     </nav>
 
-    <!-- Video Hero Section -->
+    <!-- Video Hero Section - Full Page -->
     <section class="video-hero" id="videoHero">
-        <video id="heroVideo" class="video-player" autoplay muted playsinline>
-            <source src="video1.mp4" type="video/mp4">
+        <video id="heroVideo" class="video-player" autoplay muted loop playsinline preload="auto">
+            <source src="video-combined.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 
@@ -145,12 +150,15 @@
             <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 drop-shadow-lg">
                 ProBite
             </h1>
-            <p class="text-2xl md:text-3xl font-semibold mb-6 drop-shadow-lg">
+            <p class="text-3xl md:text-4xl font-semibold mb-6 drop-shadow-2xl">
                 Fuel Your Day The Smart Way
             </p>
-            <p class="text-xl md:text-2xl mb-8 drop-shadow-lg">
+            <p class="text-2xl md:text-3xl mb-8 drop-shadow-2xl font-bold text-white">
                 30g of Pure Protein
             </p>
+            <a href="#products" class="inline-block bg-probite-orange text-white px-10 py-4 rounded-full hover:bg-probite-coral transition-all font-bold text-lg shadow-2xl hover:shadow-xl transform hover:scale-105">
+                Explore Flavors
+            </a>
         </div>
 
         <div class="scroll-indicator text-white">
@@ -183,26 +191,37 @@
         </div>
     </section>
 
-    <!-- Second Video Section -->
-    <section class="bg-gray-900 py-20">
+    <!-- Story Section -->
+    <section id="story" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="text-white fade-in">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="fade-in">
                     <h2 class="text-5xl font-serif font-bold mb-6">Handcrafted Perfection</h2>
-                    <p class="text-xl opacity-90 mb-6 leading-relaxed">
+                    <p class="text-xl text-gray-600 mb-6 leading-relaxed">
                         Every ProBite protein ball is carefully crafted with premium, all-natural ingredients.
+                        No artificial flavors, no preservatives, just pure, wholesome nutrition.
                     </p>
-                    <p class="text-xl opacity-90 mb-8 leading-relaxed">
-                        No artificial flavors, no preservatives—just pure, wholesome nutrition to fuel your active lifestyle.
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        With <span class="font-bold text-probite-orange">30g of protein</span> per ball,
+                        we've perfected the balance of taste and nutrition to fuel your active lifestyle.
                     </p>
-                    <a href="#products" class="inline-block bg-probite-orange text-white px-8 py-4 rounded-full hover:bg-probite-coral transition-all font-bold text-lg shadow-lg">
-                        Explore Flavors
-                    </a>
+                    <div class="grid grid-cols-3 gap-6 text-center">
+                        <div>
+                            <div class="text-4xl font-bold text-probite-orange mb-2">30g</div>
+                            <div class="text-sm text-gray-600">Protein</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-probite-orange mb-2">0g</div>
+                            <div class="text-sm text-gray-600">Added Sugar</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-probite-orange mb-2">100%</div>
+                            <div class="text-sm text-gray-600">Natural</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="fade-in" id="video2Section">
-                    <video id="video2" class="w-full rounded-3xl shadow-2xl" muted playsinline>
-                        <source src="video2.mp4" type="video/mp4">
-                    </video>
+                <div class="fade-in">
+                    <img src="IMG_4944.jpg" alt="ProBite Collection" class="rounded-3xl shadow-2xl">
                 </div>
             </div>
         </div>
@@ -371,52 +390,32 @@
 
     <!-- JavaScript -->
     <script>
-        // Video auto-play and transition handling
+        // Simple autoplay handling
         const heroVideo = document.getElementById('heroVideo');
-        const video2 = document.getElementById('video2');
-        const video2Section = document.getElementById('video2Section');
 
-        // When video 1 ends, scroll to video 2 and play it
-        heroVideo.addEventListener('ended', () => {
-            console.log('Video 1 ended, transitioning to Video 2');
+        // Force play on load
+        window.addEventListener('load', () => {
+            heroVideo.play().then(() => {
+                console.log('Video auto-playing successfully');
+            }).catch(e => {
+                console.log('Autoplay blocked, trying workaround:', e);
 
-            // Smooth scroll to video 2 section
-            video2Section.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-
-            // Wait for scroll, then play video 2
-            setTimeout(() => {
-                video2.play().catch(e => console.log('Video 2 play error:', e));
-            }, 1000);
-        });
-
-        // When video 2 ends, scroll back to top and play video 1
-        video2.addEventListener('ended', () => {
-            console.log('Video 2 ended, looping back to Video 1');
-
-            // Scroll back to top
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-
-            // Wait for scroll, then replay video 1
-            setTimeout(() => {
-                heroVideo.play().catch(e => console.log('Video 1 replay error:', e));
-            }, 1000);
-        });
-
-        // Start video 1
-        heroVideo.play().then(() => {
-            console.log('Video 1 auto-playing');
-        }).catch(e => {
-            console.log('Autoplay prevented:', e);
-            // Fallback: play on user interaction
-            document.body.addEventListener('click', () => {
+                // Try unmuting and replaying
+                heroVideo.muted = true;
                 heroVideo.play();
-            }, { once: true });
+
+                // Fallback: play on any user interaction
+                const playOnInteraction = () => {
+                    heroVideo.play();
+                    document.removeEventListener('click', playOnInteraction);
+                    document.removeEventListener('touchstart', playOnInteraction);
+                    document.removeEventListener('scroll', playOnInteraction);
+                };
+
+                document.addEventListener('click', playOnInteraction);
+                document.addEventListener('touchstart', playOnInteraction);
+                document.addEventListener('scroll', playOnInteraction);
+            });
         });
 
         // Fade in animations
