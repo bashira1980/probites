@@ -133,8 +133,8 @@
     </nav>
 
     <!-- Video Hero Section -->
-    <section class="video-hero">
-        <video id="heroVideo" class="video-player" autoplay muted loop playsinline controls>
+    <section class="video-hero" id="videoHero">
+        <video id="heroVideo" class="video-player" autoplay muted playsinline>
             <source src="video1.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -149,7 +149,7 @@
                 Fuel Your Day The Smart Way
             </p>
             <p class="text-xl md:text-2xl mb-8 drop-shadow-lg">
-                31g of Pure Protein
+                30g of Pure Protein
             </p>
         </div>
 
@@ -164,7 +164,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div>
-                    <div class="text-4xl font-bold mb-1">31g</div>
+                    <div class="text-4xl font-bold mb-1">30g</div>
                     <div class="text-sm opacity-90">Protein Per Ball</div>
                 </div>
                 <div>
@@ -199,8 +199,8 @@
                         Explore Flavors
                     </a>
                 </div>
-                <div class="fade-in">
-                    <video class="w-full rounded-3xl shadow-2xl" autoplay muted loop playsinline controls>
+                <div class="fade-in" id="video2Section">
+                    <video id="video2" class="w-full rounded-3xl shadow-2xl" muted playsinline>
                         <source src="video2.mp4" type="video/mp4">
                     </video>
                 </div>
@@ -226,7 +226,7 @@
                         <h3 class="text-3xl font-serif font-bold mb-3">Pistachio</h3>
                         <p class="text-gray-600 mb-4">Nutty, wholesome goodness with natural pistachios</p>
                         <div class="flex items-center justify-between">
-                            <span class="text-4xl font-bold text-probite-orange">31g</span>
+                            <span class="text-4xl font-bold text-probite-orange">30g</span>
                             <span class="text-gray-500">Protein</span>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
                         <h3 class="text-3xl font-serif font-bold mb-3">Chocolate</h3>
                         <p class="text-gray-600 mb-4">Rich, decadent chocolate meets pure protein</p>
                         <div class="flex items-center justify-between">
-                            <span class="text-4xl font-bold text-probite-orange">31g</span>
+                            <span class="text-4xl font-bold text-probite-orange">30g</span>
                             <span class="text-gray-500">Protein</span>
                         </div>
                     </div>
@@ -284,7 +284,7 @@
                         <div class="space-y-4">
                             <div class="flex justify-between items-center pb-4 border-b border-gray-200">
                                 <span class="text-lg font-semibold">Protein</span>
-                                <span class="text-3xl font-bold text-probite-orange">31g</span>
+                                <span class="text-3xl font-bold text-probite-orange">30g</span>
                             </div>
                             <div class="flex justify-between items-center pb-4 border-b border-gray-200">
                                 <span class="text-lg font-semibold">Calories</span>
@@ -371,15 +371,52 @@
 
     <!-- JavaScript -->
     <script>
-        // Video play handling
+        // Video auto-play and transition handling
         const heroVideo = document.getElementById('heroVideo');
+        const video2 = document.getElementById('video2');
+        const video2Section = document.getElementById('video2Section');
 
-        // Try to play video
+        // When video 1 ends, scroll to video 2 and play it
+        heroVideo.addEventListener('ended', () => {
+            console.log('Video 1 ended, transitioning to Video 2');
+
+            // Smooth scroll to video 2 section
+            video2Section.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            // Wait for scroll, then play video 2
+            setTimeout(() => {
+                video2.play().catch(e => console.log('Video 2 play error:', e));
+            }, 1000);
+        });
+
+        // When video 2 ends, scroll back to top and play video 1
+        video2.addEventListener('ended', () => {
+            console.log('Video 2 ended, looping back to Video 1');
+
+            // Scroll back to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Wait for scroll, then replay video 1
+            setTimeout(() => {
+                heroVideo.play().catch(e => console.log('Video 1 replay error:', e));
+            }, 1000);
+        });
+
+        // Start video 1
         heroVideo.play().then(() => {
-            console.log('Hero video playing');
+            console.log('Video 1 auto-playing');
         }).catch(e => {
-            console.log('Autoplay prevented, showing controls');
-            heroVideo.controls = true;
+            console.log('Autoplay prevented:', e);
+            // Fallback: play on user interaction
+            document.body.addEventListener('click', () => {
+                heroVideo.play();
+            }, { once: true });
         });
 
         // Fade in animations
