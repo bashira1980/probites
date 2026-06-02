@@ -155,10 +155,10 @@
     <section class="video-hero">
         <!-- Video Background -->
         <div class="video-container">
-            <video id="video1" class="video-layer active" autoplay muted playsinline>
+            <video id="video1" class="video-layer active" autoplay muted playsinline loop preload="auto">
                 <source src="video1.mp4" type="video/mp4">
             </video>
-            <video id="video2" class="video-layer" muted playsinline>
+            <video id="video2" class="video-layer" muted playsinline loop preload="auto">
                 <source src="video2.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
@@ -404,14 +404,14 @@
 
         function switchVideo() {
             if (currentVideo === 1) {
-                video2.play();
+                video2.play().catch(e => console.log('Video2 play error:', e));
                 video2.classList.add('active');
                 setTimeout(() => {
                     video1.classList.remove('active');
                 }, 2500);
                 currentVideo = 2;
             } else {
-                video1.play();
+                video1.play().catch(e => console.log('Video1 play error:', e));
                 video1.classList.add('active');
                 setTimeout(() => {
                     video2.classList.remove('active');
@@ -424,8 +424,24 @@
         video1.addEventListener('ended', switchVideo);
         video2.addEventListener('ended', switchVideo);
 
-        // Start first video
-        video1.play().catch(e => console.log('Autoplay prevented:', e));
+        // Ensure videos are ready
+        video1.addEventListener('loadeddata', () => {
+            console.log('Video 1 loaded and ready');
+        });
+        video2.addEventListener('loadeddata', () => {
+            console.log('Video 2 loaded and ready');
+        });
+
+        // Start first video with user interaction fallback
+        video1.play().then(() => {
+            console.log('Video 1 playing successfully');
+        }).catch(e => {
+            console.log('Autoplay prevented, waiting for user interaction:', e);
+            // Add click listener to start video on any user interaction
+            document.body.addEventListener('click', () => {
+                video1.play();
+            }, { once: true });
+        });
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
