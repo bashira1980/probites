@@ -29,88 +29,64 @@
             scroll-behavior: smooth;
         }
 
-        /* Video Background Styles */
+        /* Video Hero Section */
         .video-hero {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 80vh;
+            min-height: 600px;
             overflow: hidden;
+            background: #000;
         }
 
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .video-player {
             width: 100%;
             height: 100%;
-        }
-
-        .video-layer {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
             object-fit: cover;
-            opacity: 0;
-            transition: opacity 2.5s ease-in-out;
         }
 
-        .video-layer.active {
-            opacity: 1;
-        }
-
-        /* Subtle overlay for text readability - very light */
+        /* Subtle overlay */
         .video-overlay {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
             z-index: 1;
         }
 
-        /* Content over video */
         .hero-content {
-            position: relative;
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            right: 0;
             z-index: 2;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            text-align: center;
+            color: white;
         }
 
         /* Floating nav */
         .floating-nav {
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
-        }
-
-        .floating-nav.scrolled {
             background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Hero text with subtle backdrop */
-        .hero-text-container {
-            background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         /* Scroll indicator */
         .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
             animation: bounce 2s infinite;
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
         }
 
         /* Fade in animations */
@@ -134,12 +110,17 @@
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
+
+        /* Video controls styling */
+        video::-webkit-media-controls-panel {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+        }
     </style>
 </head>
 <body class="font-sans text-gray-900">
 
     <!-- Floating Navigation -->
-    <nav class="floating-nav fixed w-full top-0 z-50 px-6 py-4" id="navbar">
+    <nav class="floating-nav fixed w-full top-0 z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="text-3xl font-serif font-bold text-probite-orange">ProBite</div>
             <div class="hidden md:flex items-center gap-8">
@@ -153,82 +134,75 @@
 
     <!-- Video Hero Section -->
     <section class="video-hero">
-        <!-- Video Background -->
-        <div class="video-container">
-            <video id="video1" class="video-layer active" autoplay muted playsinline loop preload="auto">
-                <source src="video1.mp4" type="video/mp4">
-            </video>
-            <video id="video2" class="video-layer" muted playsinline loop preload="auto">
-                <source src="video2.mp4" type="video/mp4">
-            </video>
-            <div class="video-overlay"></div>
+        <video id="heroVideo" class="video-player" autoplay muted loop playsinline controls>
+            <source src="video1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="video-overlay"></div>
+
+        <div class="hero-content px-6">
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 drop-shadow-lg">
+                ProBite
+            </h1>
+            <p class="text-2xl md:text-3xl font-semibold mb-6 drop-shadow-lg">
+                Fuel Your Day The Smart Way
+            </p>
+            <p class="text-xl md:text-2xl mb-8 drop-shadow-lg">
+                31g of Pure Protein
+            </p>
         </div>
 
-        <!-- Hero Content -->
-        <div class="hero-content px-6">
-            <!-- Spacer for nav -->
-            <div class="h-20"></div>
+        <div class="scroll-indicator text-white">
+            <div class="text-sm mb-2 font-semibold tracking-wide drop-shadow-lg">SCROLL TO EXPLORE</div>
+            <div class="text-2xl">↓</div>
+        </div>
+    </section>
 
-            <!-- Center Content -->
-            <div class="flex-1 flex items-center justify-center">
-                <div class="hero-text-container rounded-3xl p-12 max-w-3xl text-center shadow-2xl">
-                    <h1 class="text-6xl md:text-8xl font-serif font-bold text-gray-900 mb-6 leading-tight">
-                        Fuel Your Day<br/>
-                        <span class="text-probite-orange">The Smart Way</span>
-                    </h1>
-                    <p class="text-2xl text-gray-800 mb-8 font-medium">
-                        31g of pure protein in every delicious bite
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#products" class="bg-probite-orange text-white px-10 py-4 rounded-full hover:bg-probite-coral transition-all shadow-lg hover:shadow-xl transform hover:scale-105 text-center font-bold text-lg">
-                            Explore Flavors
-                        </a>
-                        <a href="#story" class="bg-white/80 backdrop-blur-sm text-probite-orange border-2 border-probite-orange px-10 py-4 rounded-full hover:bg-probite-orange hover:text-white transition-all shadow-lg text-center font-bold text-lg">
-                            Learn More
-                        </a>
-                    </div>
+    <!-- Quick Stats Bar -->
+    <section class="bg-probite-orange text-white py-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-4xl font-bold mb-1">31g</div>
+                    <div class="text-sm opacity-90">Protein Per Ball</div>
                 </div>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="text-center pb-12 scroll-indicator">
-                <div class="text-white text-sm mb-2 font-semibold tracking-wide">SCROLL TO DISCOVER</div>
-                <div class="text-white text-2xl">↓</div>
+                <div>
+                    <div class="text-4xl font-bold mb-1">100%</div>
+                    <div class="text-sm opacity-90">Natural Ingredients</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-1">0g</div>
+                    <div class="text-sm opacity-90">Added Sugar</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-1">5+</div>
+                    <div class="text-sm opacity-90">Delicious Flavors</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Our Story Section -->
-    <section id="story" class="py-24 bg-white">
+    <!-- Second Video Section -->
+    <section class="bg-gray-900 py-20">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="fade-in">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-white fade-in">
                     <h2 class="text-5xl font-serif font-bold mb-6">Handcrafted Perfection</h2>
-                    <p class="text-xl text-gray-600 mb-6 leading-relaxed">
+                    <p class="text-xl opacity-90 mb-6 leading-relaxed">
                         Every ProBite protein ball is carefully crafted with premium, all-natural ingredients.
-                        No artificial flavors, no preservatives, just pure, wholesome nutrition.
                     </p>
-                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-                        With <span class="font-bold text-probite-orange">31g of protein</span> per ball,
-                        we've perfected the balance of taste and nutrition to fuel your active lifestyle.
+                    <p class="text-xl opacity-90 mb-8 leading-relaxed">
+                        No artificial flavors, no preservatives—just pure, wholesome nutrition to fuel your active lifestyle.
                     </p>
-                    <div class="grid grid-cols-3 gap-6 text-center">
-                        <div>
-                            <div class="text-4xl font-bold text-probite-orange mb-2">31g</div>
-                            <div class="text-sm text-gray-600">Protein</div>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-bold text-probite-orange mb-2">0g</div>
-                            <div class="text-sm text-gray-600">Added Sugar</div>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-bold text-probite-orange mb-2">100%</div>
-                            <div class="text-sm text-gray-600">Natural</div>
-                        </div>
-                    </div>
+                    <a href="#products" class="inline-block bg-probite-orange text-white px-8 py-4 rounded-full hover:bg-probite-coral transition-all font-bold text-lg shadow-lg">
+                        Explore Flavors
+                    </a>
                 </div>
                 <div class="fade-in">
-                    <img src="IMG_4944.jpg" alt="ProBite Collection" class="rounded-3xl shadow-2xl">
+                    <video class="w-full rounded-3xl shadow-2xl" autoplay muted loop playsinline controls>
+                        <source src="video2.mp4" type="video/mp4">
+                    </video>
                 </div>
             </div>
         </div>
@@ -295,14 +269,14 @@
     <section id="nutrition" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="fade-in">
+                <div class="fade-in order-2 md:order-1">
                     <img src="IMG_3286.jpg" alt="Ingredients" class="rounded-3xl shadow-2xl">
                 </div>
-                <div class="fade-in">
+                <div class="fade-in order-1 md:order-2">
                     <h2 class="text-5xl font-serif font-bold mb-6">Nutrition That Works</h2>
                     <p class="text-xl text-gray-600 mb-8 leading-relaxed">
                         Designed by nutritionists, perfected by nature. Every ProBite is packed with
-                        premium protein, healthy fats, and clean carbs to fuel your performance.
+                        premium protein, healthy fats, and clean carbs.
                     </p>
 
                     <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-8 mb-8">
@@ -397,60 +371,15 @@
 
     <!-- JavaScript -->
     <script>
-        // Seamless Video Transitions
-        const video1 = document.getElementById('video1');
-        const video2 = document.getElementById('video2');
-        let currentVideo = 1;
+        // Video play handling
+        const heroVideo = document.getElementById('heroVideo');
 
-        function switchVideo() {
-            if (currentVideo === 1) {
-                video2.play().catch(e => console.log('Video2 play error:', e));
-                video2.classList.add('active');
-                setTimeout(() => {
-                    video1.classList.remove('active');
-                }, 2500);
-                currentVideo = 2;
-            } else {
-                video1.play().catch(e => console.log('Video1 play error:', e));
-                video1.classList.add('active');
-                setTimeout(() => {
-                    video2.classList.remove('active');
-                }, 2500);
-                currentVideo = 1;
-            }
-        }
-
-        // Start video transitions
-        video1.addEventListener('ended', switchVideo);
-        video2.addEventListener('ended', switchVideo);
-
-        // Ensure videos are ready
-        video1.addEventListener('loadeddata', () => {
-            console.log('Video 1 loaded and ready');
-        });
-        video2.addEventListener('loadeddata', () => {
-            console.log('Video 2 loaded and ready');
-        });
-
-        // Start first video with user interaction fallback
-        video1.play().then(() => {
-            console.log('Video 1 playing successfully');
+        // Try to play video
+        heroVideo.play().then(() => {
+            console.log('Hero video playing');
         }).catch(e => {
-            console.log('Autoplay prevented, waiting for user interaction:', e);
-            // Add click listener to start video on any user interaction
-            document.body.addEventListener('click', () => {
-                video1.play();
-            }, { once: true });
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            console.log('Autoplay prevented, showing controls');
+            heroVideo.controls = true;
         });
 
         // Fade in animations
