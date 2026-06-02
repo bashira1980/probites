@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProBite - Fuel Your Day The Smart Way</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Lora', 'serif'],
+                        'sans': ['Raleway', 'sans-serif'],
+                    },
+                    colors: {
+                        'probite-orange': '#EA580C',
+                        'probite-coral': '#F97316',
+                        'fresh-green': '#10B981',
+                        'wellness-green': '#059669',
+                        'soft-mint': '#ECFDF5',
+                        'earth-brown': '#8B4513',
+                        'warm-bg': '#FFF7ED',
+                    },
+                    borderRadius: {
+                        'organic': '24px',
+                        'soft': '20px',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
+        .organic-blob {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: blob 8s ease-in-out infinite;
+        }
+
+        @keyframes blob {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+        }
+
+        .parallax-bg {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #FFF7ED 0%, #ECFDF5 50%, #FFF7ED 100%);
+        }
+
+        /* Scroll animations */
+        .scroll-fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-slide-left {
+            opacity: 0;
+            transform: translateX(-80px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-slide-right {
+            opacity: 0;
+            transform: translateX(80px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Floating fitness icons */
+        .floating-icon {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(5deg); }
+            66% { transform: translateY(-15px) rotate(-5deg); }
+        }
+
+        .floating-icon:nth-child(2) { animation-delay: 3s; animation-duration: 15s; }
+        .floating-icon:nth-child(3) { animation-delay: 6s; animation-duration: 18s; }
+        .floating-icon:nth-child(4) { animation-delay: 9s; animation-duration: 22s; }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #EA580C, #10B981);
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Stagger delays for list items */
+        .scroll-fade-in:nth-child(1) { transition-delay: 0.1s; }
+        .scroll-fade-in:nth-child(2) { transition-delay: 0.2s; }
+        .scroll-fade-in:nth-child(3) { transition-delay: 0.3s; }
+        .scroll-fade-in:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Nutrition pulse */
+        .pulse-glow {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 3D Protein Ball Animations */
+        .protein-ball-3d {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3D 20s infinite linear;
+            background: radial-gradient(circle at 30% 30%, #FFD93D, #F97316, #EA580C);
+            box-shadow:
+                0 20px 60px rgba(234, 88, 12, 0.4),
+                inset -20px -20px 40px rgba(0, 0, 0, 0.2),
+                inset 20px 20px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .protein-ball-3d::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 40%;
+            height: 40%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+            filter: blur(10px);
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        /* Interactive 3D Container */
+        .scene-3d {
+            perspective: 1000px;
+            perspective-origin: center;
+        }
+
+        .protein-sphere {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: radial-gradient(circle at 35% 35%, #10B981, #059669, #047857);
+            box-shadow:
+                0 30px 80px rgba(16, 185, 129, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.3),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+        }
+
+        .protein-sphere:hover {
+            transform: scale(1.1) rotateY(180deg);
+        }
+
+        .protein-sphere.pistachio {
+            background: radial-gradient(circle at 35% 35%, #BBF7D0, #86EFAC, #4ADE80);
+            box-shadow:
+                0 30px 80px rgba(74, 222, 128, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.2),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .protein-sphere.chocolate {
+            background: radial-gradient(circle at 35% 35%, #8B4513, #654321, #3E2723);
+            box-shadow:
+                0 30px 80px rgba(139, 69, 19, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.4),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .protein-sphere.orange {
+            background: radial-gradient(circle at 35% 35%, #FFA500, #FF8C00, #EA580C);
+            box-shadow:
+                0 30px 80px rgba(255, 165, 0, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.3),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Floating 3D Animation */
+        .float-3d {
+            animation: float3D 6s ease-in-out infinite;
+        }
+
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-30px) rotateX(10deg); }
+        }
+
+        /* Spin on scroll */
+        .spin-on-scroll {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* 3D Card Flip */
+        .flip-card {
+            perspective: 1000px;
+            background: transparent;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Video Background Styles */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .video-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .video-layer.active {
+            opacity: 1;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 247, 237, 0.85) 0%, rgba(236, 253, 245, 0.85) 50%, rgba(255, 247, 237, 0.85) 100%);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 relative overflow-x-hidden">
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Floating Fitness Icons Background -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="floating-icon" style="top: 10%; left: 5%; font-size: 120px;">💪</div>
+        <div class="floating-icon" style="top: 60%; right: 8%; font-size: 100px;">🏃</div>
+        <div class="floating-icon" style="top: 30%; right: 15%; font-size: 90px;">🥗</div>
+        <div class="floating-icon" style="bottom: 20%; left: 10%; font-size: 110px;">⚡</div>
+        <div class="floating-icon" style="top: 70%; left: 20%; font-size: 95px;">🎯</div>
+        <div class="floating-icon" style="top: 45%; right: 25%; font-size: 85px;">🔥</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-3xl font-serif font-bold text-probite-orange">ProBite</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#products" class="text-gray-700 hover:text-probite-orange transition-colors font-medium">Products</a>
+                    <a href="#benefits" class="text-gray-700 hover:text-probite-orange transition-colors font-medium">Benefits</a>
+                    <a href="#nutrition" class="text-gray-700 hover:text-probite-orange transition-colors font-medium">Nutrition</a>
+                    <a href="#fitness" class="text-gray-700 hover:text-probite-orange transition-colors font-medium">Fitness</a>
+                    <a href="#contact" class="bg-probite-orange text-white px-6 py-3 rounded-organic hover:bg-probite-coral transition-all shadow-lg hover:shadow-xl transform hover:scale-105">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    <section class="pt-32 pb-20 overflow-hidden relative min-h-screen flex items-center">
+        <!-- Seamless Video Background -->
+        <div class="video-background">
+            <video id="video1" class="video-layer active" autoplay muted loop playsinline>
+                <source src="video1.mp4" type="video/mp4">
+            </video>
+            <video id="video2" class="video-layer" muted loop playsinline>
+                <source src="video2.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="scroll-fade-in visible bg-white/80 backdrop-blur-md p-8 rounded-organic">
+                    <h1 class="text-6xl md:text-7xl font-serif font-bold text-gray-900 mb-6 leading-tight">
+                        Fuel Your Day<br/>
+                        <span class="text-probite-orange">The Smart Way</span>
+                    </h1>
+                    <p class="text-xl text-gray-800 mb-8 leading-relaxed font-medium">
+                        Premium protein balls crafted with wholesome ingredients.
+                        <span class="font-semibold text-wellness-green">31g of pure protein</span> in every delicious bite.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#products" class="bg-probite-orange text-white px-8 py-4 rounded-organic hover:bg-probite-coral transition-all shadow-lg hover:shadow-xl transform hover:scale-105 text-center font-semibold text-lg">
+                            Explore Flavors
+                        </a>
+                        <a href="#nutrition" class="bg-white text-probite-orange border-2 border-probite-orange px-8 py-4 rounded-organic hover:bg-probite-orange hover:text-white transition-all shadow-lg text-center font-semibold text-lg">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="relative parallax-hero">
+
+                    <!-- Auto-Scrolling Gallery -->
+                    <div class="relative overflow-hidden rounded-organic">
+                        <div id="heroGallery" class="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4" style="scroll-behavior: smooth;">
+                            <div class="flex-shrink-0 snap-center w-full">
+                                <img src="IMG_4944.jpg" alt="ProBite Collection" class="w-full h-96 object-cover rounded-organic shadow-2xl hover:shadow-3xl transition-all">
+                            </div>
+                            <div class="flex-shrink-0 snap-center w-full">
+                                <img src="IMG_3420.jpg" alt="Variety Pack" class="w-full h-96 object-cover rounded-organic shadow-2xl hover:shadow-3xl transition-all">
+                            </div>
+                            <div class="flex-shrink-0 snap-center w-full">
+                                <img src="IMG_3250.jpg" alt="Pistachio Protein Ball" class="w-full h-96 object-cover rounded-organic shadow-2xl hover:shadow-3xl transition-all">
+                            </div>
+                            <div class="flex-shrink-0 snap-center w-full">
+                                <img src="IMG_3286.jpg" alt="Fresh Ingredients" class="w-full h-96 object-cover rounded-organic shadow-2xl hover:shadow-3xl transition-all">
+                            </div>
+                            <div class="flex-shrink-0 snap-center w-full">
+                                <img src="IMG_3392.jpg" alt="Chocolate Delight" class="w-full h-96 object-cover rounded-organic shadow-2xl hover:shadow-3xl transition-all">
+                            </div>
+                        </div>
+
+                        <!-- Gallery Indicators -->
+                        <div class="flex justify-center gap-2 mt-4">
+                            <button class="gallery-dot w-2 h-2 rounded-full bg-probite-orange transition-all" data-index="0"></button>
+                            <button class="gallery-dot w-2 h-2 rounded-full bg-gray-300 hover:bg-probite-orange transition-all" data-index="1"></button>
+                            <button class="gallery-dot w-2 h-2 rounded-full bg-gray-300 hover:bg-probite-orange transition-all" data-index="2"></button>
+                            <button class="gallery-dot w-2 h-2 rounded-full bg-gray-300 hover:bg-probite-orange transition-all" data-index="3"></button>
+                            <button class="gallery-dot w-2 h-2 rounded-full bg-gray-300 hover:bg-probite-orange transition-all" data-index="4"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="bg-white py-12 shadow-md relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="scroll-scale">
+                    <div class="text-4xl font-serif font-bold text-probite-orange mb-2 pulse-glow inline-block px-4 py-2 rounded-soft">31g</div>
+                    <div class="text-gray-600 font-medium">Protein Per Ball</div>
+                </div>
+                <div class="scroll-scale">
+                    <div class="text-4xl font-serif font-bold text-fresh-green mb-2">100%</div>
+                    <div class="text-gray-600 font-medium">Natural Ingredients</div>
+                </div>
+                <div class="scroll-scale">
+                    <div class="text-4xl font-serif font-bold text-probite-orange mb-2">0g</div>
+                    <div class="text-gray-600 font-medium">Added Sugar</div>
+                </div>
+                <div class="scroll-scale">
+                    <div class="text-4xl font-serif font-bold text-fresh-green mb-2">5+</div>
+                    <div class="text-gray-600 font-medium">Delicious Flavors</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Protein Matters Section - NEW -->
+    <section class="py-20 bg-gradient-to-br from-white via-soft-mint to-white relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-fade-in">
+                <h2 class="text-5xl font-serif font-bold text-gray-900 mb-4">The Power of Protein</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Discover why 31g of premium protein is your secret weapon for peak performance and optimal health</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white p-6 rounded-organic shadow-lg scroll-fade-in hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 bg-wellness-green/10 rounded-soft flex items-center justify-center mb-4">
+                        <span class="text-3xl">💪</span>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-3 text-gray-900">Builds Muscle</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Protein provides essential amino acids that repair and build lean muscle tissue, especially crucial after workouts.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-organic shadow-lg scroll-fade-in hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 bg-probite-orange/10 rounded-soft flex items-center justify-center mb-4">
+                        <span class="text-3xl">⚡</span>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-3 text-gray-900">Sustained Energy</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Unlike simple carbs, protein provides steady, long-lasting energy without the crash, keeping you fueled for hours.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-organic shadow-lg scroll-fade-in hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 bg-wellness-green/10 rounded-soft flex items-center justify-center mb-4">
+                        <span class="text-3xl">🔥</span>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-3 text-gray-900">Boosts Metabolism</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">High protein intake increases your metabolic rate, helping you burn more calories even at rest (thermic effect).</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-organic shadow-lg scroll-fade-in hover:shadow-xl transition-all">
+                    <div class="w-16 h-16 bg-probite-orange/10 rounded-soft flex items-center justify-center mb-4">
+                        <span class="text-3xl">😌</span>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-3 text-gray-900">Reduces Cravings</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Protein increases satiety hormones and reduces hunger hormones, helping you feel full longer and curb unhealthy snacking.</p>
+                </div>
+            </div>
+
+            <!-- Protein Science Callout -->
+            <div class="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-organic shadow-2xl scroll-fade-in">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-3xl font-serif font-bold mb-4 text-gray-900">Why 31g?</h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            Research shows that <span class="font-bold text-wellness-green">20-30g of protein per serving</span> is the optimal amount for maximum muscle protein synthesis. Our 31g formula ensures you hit the sweet spot every time.
+                        </p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            This isn't just protein — it's <span class="font-bold text-probite-orange">complete protein</span> containing all 9 essential amino acids your body can't produce on its own. Perfect for recovery, growth, and overall wellness.
+                        </p>
+                        <div class="bg-soft-mint p-4 rounded-soft">
+                            <p class="text-sm text-gray-700">
+                                <span class="font-bold">Pro Tip:</span> Distribute protein throughout your day for optimal muscle maintenance. Each ProBite provides nearly half your daily protein needs in one convenient snack!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-wellness-green text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Supports Weight Management</h4>
+                                <p class="text-sm text-gray-600">Higher protein diets are proven to preserve lean muscle while reducing body fat</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-wellness-green text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Improves Athletic Performance</h4>
+                                <p class="text-sm text-gray-600">Faster recovery means more productive training sessions and better results</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-wellness-green text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Strengthens Immune System</h4>
+                                <p class="text-sm text-gray-600">Antibodies and immune cells are made from protein — adequate intake keeps you healthy</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-wellness-green text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-sm font-bold">✓</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-1">Maintains Bone Health</h4>
+                                <p class="text-sm text-gray-600">Contrary to myths, protein supports bone density and reduces fracture risk</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Interactive Protein Ball Showcase - NEW -->
+    <section class="py-20 bg-gray-900 text-white relative overflow-hidden z-10">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="protein-ball-3d absolute top-10 left-10 float-3d" style="animation-delay: 0s;"></div>
+            <div class="protein-ball-3d absolute bottom-20 right-20 float-3d" style="animation-delay: 2s; width: 150px; height: 150px;"></div>
+            <div class="protein-ball-3d absolute top-1/2 left-1/4 float-3d" style="animation-delay: 4s; width: 100px; height: 100px;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 scroll-fade-in">
+                <h2 class="text-5xl font-serif font-bold mb-4">Experience ProBite in 3D</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Hover over our protein balls to explore each delicious flavor in stunning detail</p>
+            </div>
+
+            <!-- 3D Product Display -->
+            <div class="grid md:grid-cols-4 gap-12 scene-3d mb-16">
+                <!-- Pistachio Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere pistachio"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Pistachio</h3>
+                    <p class="text-gray-400 text-sm">Nutty & Natural</p>
+                </div>
+
+                <!-- Chocolate Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere chocolate"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Chocolate</h3>
+                    <p class="text-gray-400 text-sm">Rich & Decadent</p>
+                </div>
+
+                <!-- Green Energy Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Matcha</h3>
+                    <p class="text-gray-400 text-sm">Energy Boost</p>
+                </div>
+
+                <!-- Orange Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere orange"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Mango</h3>
+                    <p class="text-gray-400 text-sm">Tropical Twist</p>
+                </div>
+            </div>
+
+            <!-- 3D Feature Cards -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="flip-card h-64 scroll-scale">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-probite-orange to-probite-coral p-8 flex flex-col items-center justify-center">
+                            <div class="text-6xl mb-4">🌀</div>
+                            <h3 class="text-2xl font-serif font-bold">360° Quality</h3>
+                            <p class="text-sm mt-2 opacity-90">Hover to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-wellness-green to-fresh-green p-8 flex flex-col items-center justify-center">
+                            <p class="text-center text-lg">Every angle reveals our commitment to premium, all-natural ingredients</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card h-64 scroll-scale">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-fresh-green to-wellness-green p-8 flex flex-col items-center justify-center">
+                            <div class="text-6xl mb-4">💫</div>
+                            <h3 class="text-2xl font-serif font-bold">Handcrafted</h3>
+                            <p class="text-sm mt-2 opacity-90">Hover to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-probite-coral to-probite-orange p-8 flex flex-col items-center justify-center">
+                            <p class="text-center text-lg">Each ball is carefully rolled by hand for perfect texture and taste</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card h-64 scroll-scale">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-yellow-400 to-orange-500 p-8 flex flex-col items-center justify-center">
+                            <div class="text-6xl mb-4">⚡</div>
+                            <h3 class="text-2xl font-serif font-bold">Pure Power</h3>
+                            <p class="text-sm mt-2 opacity-90">Hover to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-green-400 to-emerald-600 p-8 flex flex-col items-center justify-center">
+                            <p class="text-center text-lg">31g of protein packed into every delicious, energy-boosting bite</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Note -->
+            <div class="text-center mt-12 scroll-fade-in">
+                <p class="text-gray-400 text-sm">💡 Tip: Hover over the protein balls and cards to interact with them!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section with Scroll Effects -->
+    <section id="products" class="py-20 bg-soft-mint relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-fade-in">
+                <h2 class="text-5xl font-serif font-bold text-gray-900 mb-4">Our Flavors</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Handcrafted protein balls in flavors that fuel your body and delight your taste buds</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pistachio Flavor -->
+                <div class="bg-white rounded-organic shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 hover:shadow-2xl scroll-fade-in">
+                    <div class="h-64 overflow-hidden">
+                        <img src="IMG_3250.jpg" alt="Pistachio Protein Ball" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-serif font-bold text-gray-900 mb-2">Pistachio Energy Ball</h3>
+                        <p class="text-gray-600 mb-4">Nutty, wholesome goodness packed with protein and natural pistachios</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-bold text-wellness-green">31g</span>
+                            <span class="text-gray-500 text-sm">Protein</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mixed Flavors -->
+                <div class="bg-white rounded-organic shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 hover:shadow-2xl scroll-fade-in">
+                    <div class="h-64 overflow-hidden">
+                        <img src="IMG_3420.jpg" alt="ProBite Variety Pack" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-serif font-bold text-gray-900 mb-2">Variety Pack</h3>
+                        <p class="text-gray-600 mb-4">Experience all our delicious flavors in one convenient package</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-bold text-probite-orange">3</span>
+                            <span class="text-gray-500 text-sm">Flavors</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chocolate Flavor -->
+                <div class="bg-white rounded-organic shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 hover:shadow-2xl scroll-fade-in">
+                    <div class="h-64 overflow-hidden">
+                        <img src="IMG_3392.jpg" alt="Chocolate Protein Ball" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-serif font-bold text-gray-900 mb-2">Chocolate Bliss</h3>
+                        <p class="text-gray-600 mb-4">Rich, decadent chocolate flavor meets premium protein power</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-bold text-wellness-green">31g</span>
+                            <span class="text-gray-500 text-sm">Protein</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section with Parallax -->
+    <section id="benefits" class="py-20 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="scroll-slide-left">
+                    <img src="IMG_3313.jpg" alt="ProBite Natural Ingredients" class="rounded-organic shadow-2xl">
+                </div>
+                <div class="scroll-slide-right">
+                    <h2 class="text-5xl font-serif font-bold text-gray-900 mb-6">Why Choose ProBite?</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 scroll-fade-in">
+                            <div class="bg-fresh-green/10 p-3 rounded-soft">
+                                <svg class="w-6 h-6 text-fresh-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">High-Quality Protein</h3>
+                                <p class="text-gray-600">31g of premium protein per ball to fuel your active lifestyle and support muscle recovery</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 scroll-fade-in">
+                            <div class="bg-probite-orange/10 p-3 rounded-soft">
+                                <svg class="w-6 h-6 text-probite-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">All-Natural Ingredients</h3>
+                                <p class="text-gray-600">Made with wholesome, natural ingredients you can pronounce and trust</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 scroll-fade-in">
+                            <div class="bg-fresh-green/10 p-3 rounded-soft">
+                                <svg class="w-6 h-6 text-fresh-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Perfect for Any Time</h3>
+                                <p class="text-gray-600">Pre-workout fuel, post-workout recovery, or healthy snack on the go</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 scroll-fade-in">
+                            <div class="bg-probite-orange/10 p-3 rounded-soft">
+                                <svg class="w-6 h-6 text-probite-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Handcrafted Quality</h3>
+                                <p class="text-gray-600">Each protein ball is carefully crafted to ensure perfect taste and nutrition</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fitness Journey Section - NEW -->
+    <section id="fitness" class="py-20 bg-gradient-to-br from-probite-orange/10 via-fresh-green/10 to-warm-bg relative z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-fade-in">
+                <h2 class="text-5xl font-serif font-bold text-gray-900 mb-4">Perfect for Your Fitness Journey</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Whether you're crushing PRs or crushing your day, ProBite has you covered</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="scroll-fade-in bg-white/80 backdrop-blur-sm p-8 rounded-organic shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2">
+                    <div class="text-6xl mb-4">🏋️</div>
+                    <h3 class="text-2xl font-serif font-bold mb-3">Pre-Workout Power</h3>
+                    <p class="text-gray-600 mb-4">Load up 30 minutes before your workout for sustained energy and optimal performance</p>
+                    <div class="bg-probite-orange/10 p-4 rounded-soft">
+                        <p class="text-sm font-semibold text-probite-orange">⚡ Fast-acting protein + natural carbs</p>
+                    </div>
+                </div>
+
+                <div class="scroll-fade-in bg-white/80 backdrop-blur-sm p-8 rounded-organic shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2">
+                    <div class="text-6xl mb-4">💪</div>
+                    <h3 class="text-2xl font-serif font-bold mb-3">Post-Workout Recovery</h3>
+                    <p class="text-gray-600 mb-4">Maximize muscle recovery with 31g of protein within your anabolic window</p>
+                    <div class="bg-fresh-green/10 p-4 rounded-soft">
+                        <p class="text-sm font-semibold text-fresh-green">🔥 Rapid muscle repair + reduced soreness</p>
+                    </div>
+                </div>
+
+                <div class="scroll-fade-in bg-white/80 backdrop-blur-sm p-8 rounded-organic shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2">
+                    <div class="text-6xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-serif font-bold mb-3">Anytime Nutrition</h3>
+                    <p class="text-gray-600 mb-4">Healthy snacking that supports your goals between meals and on busy days</p>
+                    <div class="bg-probite-coral/10 p-4 rounded-soft">
+                        <p class="text-sm font-semibold text-probite-coral">✨ Sustained energy + zero guilt</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Section with Enhanced Visuals -->
+    <section id="nutrition" class="py-20 bg-warm-bg relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-fade-in">
+                <h2 class="text-5xl font-serif font-bold text-gray-900 mb-4">Nutrition That Works</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Designed by nutritionists, perfected by nature</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-10 rounded-organic shadow-xl scroll-slide-left">
+                    <h3 class="text-3xl font-serif font-bold mb-8 text-center">Per Ball Nutrition</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center pb-4 border-b border-gray-200 scroll-fade-in">
+                            <span class="text-lg font-semibold">Protein</span>
+                            <span class="text-2xl font-bold text-wellness-green">31g</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4 border-b border-gray-200 scroll-fade-in">
+                            <span class="text-lg font-semibold">Calories</span>
+                            <span class="text-2xl font-bold text-gray-900">220</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4 border-b border-gray-200 scroll-fade-in">
+                            <span class="text-lg font-semibold">Carbs</span>
+                            <span class="text-2xl font-bold text-gray-900">12g</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4 border-b border-gray-200 scroll-fade-in">
+                            <span class="text-lg font-semibold">Healthy Fats</span>
+                            <span class="text-2xl font-bold text-gray-900">8g</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4 border-b border-gray-200 scroll-fade-in">
+                            <span class="text-lg font-semibold">Added Sugar</span>
+                            <span class="text-2xl font-bold text-probite-orange">0g</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-4 bg-soft-mint rounded-soft">
+                        <p class="text-sm text-gray-600 text-center">🌱 Gluten-Free • No Artificial Colors • No Preservatives</p>
+                    </div>
+                </div>
+
+                <div class="scroll-slide-right">
+                    <img src="IMG_3286.jpg" alt="ProBite Ingredients" class="rounded-organic shadow-2xl mb-6 hover:scale-105 transition-transform duration-500">
+                    <div class="bg-white p-6 rounded-organic shadow-lg">
+                        <h4 class="font-serif font-bold text-2xl mb-4">Clean Ingredients</h4>
+                        <p class="text-gray-600 leading-relaxed">
+                            We believe in transparency. Every ProBite is made with carefully selected,
+                            whole-food ingredients including premium nuts, seeds, natural nut butters,
+                            and plant-based proteins. No artificial anything.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Macro Breakdown Visual - NEW -->
+    <section class="py-20 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-fade-in">
+                <h2 class="text-5xl font-serif font-bold text-gray-900 mb-4">Balanced Macros</h2>
+                <p class="text-xl text-gray-600">The perfect ratio for sustained energy and muscle support</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center scroll-scale">
+                    <div class="relative w-48 h-48 mx-auto mb-6">
+                        <svg class="transform -rotate-90 w-48 h-48">
+                            <circle cx="96" cy="96" r="80" stroke="#f3f4f6" stroke-width="16" fill="none" />
+                            <circle cx="96" cy="96" r="80" stroke="#10B981" stroke-width="16" fill="none"
+                                    stroke-dasharray="502" stroke-dashoffset="123" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-4xl font-bold text-wellness-green">31g</span>
+                            <span class="text-sm text-gray-600">Protein</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Builds & repairs muscle tissue</p>
+                </div>
+
+                <div class="text-center scroll-scale">
+                    <div class="relative w-48 h-48 mx-auto mb-6">
+                        <svg class="transform -rotate-90 w-48 h-48">
+                            <circle cx="96" cy="96" r="80" stroke="#f3f4f6" stroke-width="16" fill="none" />
+                            <circle cx="96" cy="96" r="80" stroke="#F97316" stroke-width="16" fill="none"
+                                    stroke-dasharray="502" stroke-dashoffset="351" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-4xl font-bold text-probite-coral">12g</span>
+                            <span class="text-sm text-gray-600">Carbs</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Quick energy for performance</p>
+                </div>
+
+                <div class="text-center scroll-scale">
+                    <div class="relative w-48 h-48 mx-auto mb-6">
+                        <svg class="transform -rotate-90 w-48 h-48">
+                            <circle cx="96" cy="96" r="80" stroke="#f3f4f6" stroke-width="16" fill="none" />
+                            <circle cx="96" cy="96" r="80" stroke="#EA580C" stroke-width="16" fill="none"
+                                    stroke-dasharray="502" stroke-dashoffset="401" stroke-linecap="round" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-4xl font-bold text-probite-orange">8g</span>
+                            <span class="text-sm text-gray-600">Fats</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Healthy fats for satiety</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-probite-orange to-probite-coral text-white relative z-10 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div style="font-size: 200px; position: absolute; top: -50px; right: -50px; transform: rotate(15deg);">💪</div>
+            <div style="font-size: 180px; position: absolute; bottom: -40px; left: -40px; transform: rotate(-20deg);">🔥</div>
+        </div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 scroll-fade-in">
+            <h2 class="text-5xl font-serif font-bold mb-6">Ready to Fuel Your Day?</h2>
+            <p class="text-xl mb-10 opacity-90">Join thousands of health-conscious individuals who've made ProBite part of their daily routine</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#" class="bg-white text-probite-orange px-10 py-4 rounded-organic hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 text-center font-bold text-lg">
+                    Order Now
+                </a>
+                <a href="#" class="border-2 border-white text-white px-10 py-4 rounded-organic hover:bg-white hover:text-probite-orange transition-all shadow-lg text-center font-bold text-lg">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-3xl font-serif font-bold text-probite-orange mb-4">ProBite</div>
+                    <p class="text-sm">Fuel Your Day The Smart Way</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Products</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">All Flavors</a></li>
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">Variety Packs</a></li>
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">Subscriptions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Company</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">Our Story</a></li>
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Follow Us</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">Instagram</a></li>
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">Facebook</a></li>
+                        <li><a href="#" class="hover:text-probite-orange transition-colors">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+                <p>&copy; 2026 ProBite. All rights reserved. Made with ❤️ and protein.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Scroll Effects -->
+    <script>
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Seamless Video Background Transitions
+        const video1 = document.getElementById('video1');
+        const video2 = document.getElementById('video2');
+        let currentVideo = 1;
+
+        function switchVideo() {
+            if (currentVideo === 1) {
+                // Fade to video 2
+                video2.play();
+                video2.classList.add('active');
+                video1.classList.remove('active');
+                currentVideo = 2;
+
+                // When video2 ends, prepare to switch back
+                video2.onended = () => {
+                    setTimeout(switchVideo, 100);
+                };
+            } else {
+                // Fade to video 1
+                video1.play();
+                video1.classList.add('active');
+                video2.classList.remove('active');
+                currentVideo = 1;
+
+                // When video1 ends, prepare to switch back
+                video1.onended = () => {
+                    setTimeout(switchVideo, 100);
+                };
+            }
+        }
+
+        // Start the transition cycle when video1 ends
+        video1.onended = () => {
+            setTimeout(switchVideo, 100);
+        };
+
+        // Ensure video1 starts playing
+        video1.play().catch(e => console.log('Video autoplay prevented:', e));
+
+        // 3D Protein Ball Scroll Rotation
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const proteinSpheres = document.querySelectorAll('.protein-sphere');
+
+            proteinSpheres.forEach((sphere, index) => {
+                const rect = sphere.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+                if (isVisible) {
+                    const rotateAmount = scrolled * 0.1 + (index * 90);
+                    sphere.style.transform = `rotateY(${rotateAmount}deg) rotateX(${rotateAmount * 0.5}deg)`;
+                }
+            });
+
+            // Rotate hero 3D ball on scroll
+            const heroBall = document.querySelector('.parallax-hero .protein-ball-3d');
+            if (heroBall) {
+                const rotation = scrolled * 0.3;
+                heroBall.style.transform = `rotateX(${rotation}deg) rotateY(${rotation}deg) translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Auto-Scrolling Gallery
+        const gallery = document.getElementById('heroGallery');
+        const galleryDots = document.querySelectorAll('.gallery-dot');
+        let currentIndex = 0;
+        let autoScrollInterval;
+        let isPaused = false;
+
+        function scrollToIndex(index) {
+            const galleryWidth = gallery.offsetWidth;
+            gallery.scrollTo({
+                left: galleryWidth * index,
+                behavior: 'smooth'
+            });
+            currentIndex = index;
+            updateDots();
+        }
+
+        function updateDots() {
+            galleryDots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.remove('bg-gray-300');
+                    dot.classList.add('bg-probite-orange', 'w-8');
+                } else {
+                    dot.classList.remove('bg-probite-orange', 'w-8');
+                    dot.classList.add('bg-gray-300');
+                }
+            });
+        }
+
+        function autoScroll() {
+            if (!isPaused) {
+                currentIndex = (currentIndex + 1) % 5; // 5 images
+                scrollToIndex(currentIndex);
+            }
+        }
+
+        // Start auto-scroll
+        autoScrollInterval = setInterval(autoScroll, 3000); // Change image every 3 seconds
+
+        // Pause on hover
+        gallery.addEventListener('mouseenter', () => {
+            isPaused = true;
+        });
+
+        gallery.addEventListener('mouseleave', () => {
+            isPaused = false;
+        });
+
+        // Click dots to navigate
+        galleryDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                scrollToIndex(index);
+                isPaused = true;
+                clearInterval(autoScrollInterval);
+                setTimeout(() => {
+                    isPaused = false;
+                    autoScrollInterval = setInterval(autoScroll, 3000);
+                }, 5000); // Resume auto-scroll after 5 seconds
+            });
+        });
+
+        // Parallax Effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+
+            // Hero parallax
+            const heroImage = document.querySelector('.parallax-hero');
+            if (heroImage) {
+                heroImage.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+
+            // Navbar effect
+            const navbar = document.getElementById('navbar');
+            if (scrolled > 100) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)';
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll animation elements
+        document.querySelectorAll('.scroll-fade-in, .scroll-slide-left, .scroll-slide-right, .scroll-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
