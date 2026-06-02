@@ -156,6 +156,132 @@
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
+
+        /* 3D Protein Ball Animations */
+        .protein-ball-3d {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3D 20s infinite linear;
+            background: radial-gradient(circle at 30% 30%, #FFD93D, #F97316, #EA580C);
+            box-shadow:
+                0 20px 60px rgba(234, 88, 12, 0.4),
+                inset -20px -20px 40px rgba(0, 0, 0, 0.2),
+                inset 20px 20px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .protein-ball-3d::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 40%;
+            height: 40%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+            filter: blur(10px);
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        /* Interactive 3D Container */
+        .scene-3d {
+            perspective: 1000px;
+            perspective-origin: center;
+        }
+
+        .protein-sphere {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: radial-gradient(circle at 35% 35%, #10B981, #059669, #047857);
+            box-shadow:
+                0 30px 80px rgba(16, 185, 129, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.3),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+        }
+
+        .protein-sphere:hover {
+            transform: scale(1.1) rotateY(180deg);
+        }
+
+        .protein-sphere.pistachio {
+            background: radial-gradient(circle at 35% 35%, #BBF7D0, #86EFAC, #4ADE80);
+            box-shadow:
+                0 30px 80px rgba(74, 222, 128, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.2),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .protein-sphere.chocolate {
+            background: radial-gradient(circle at 35% 35%, #8B4513, #654321, #3E2723);
+            box-shadow:
+                0 30px 80px rgba(139, 69, 19, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.4),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .protein-sphere.orange {
+            background: radial-gradient(circle at 35% 35%, #FFA500, #FF8C00, #EA580C);
+            box-shadow:
+                0 30px 80px rgba(255, 165, 0, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.3),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Floating 3D Animation */
+        .float-3d {
+            animation: float3D 6s ease-in-out infinite;
+        }
+
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-30px) rotateX(10deg); }
+        }
+
+        /* Spin on scroll */
+        .spin-on-scroll {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* 3D Card Flip */
+        .flip-card {
+            perspective: 1000px;
+            background: transparent;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
 <body class="font-sans text-gray-900 relative overflow-x-hidden">
@@ -214,6 +340,11 @@
                     </div>
                 </div>
                 <div class="relative parallax-hero">
+                    <!-- 3D Floating Protein Ball -->
+                    <div class="absolute -top-20 -right-20 hidden lg:block scene-3d">
+                        <div class="protein-ball-3d float-3d" style="width: 250px; height: 250px;"></div>
+                    </div>
+
                     <div class="organic-blob absolute inset-0 bg-gradient-to-br from-fresh-green/20 to-probite-coral/20 blur-3xl"></div>
 
                     <!-- Auto-Scrolling Gallery -->
@@ -372,6 +503,112 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Interactive Protein Ball Showcase - NEW -->
+    <section class="py-20 bg-gray-900 text-white relative overflow-hidden z-10">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="protein-ball-3d absolute top-10 left-10 float-3d" style="animation-delay: 0s;"></div>
+            <div class="protein-ball-3d absolute bottom-20 right-20 float-3d" style="animation-delay: 2s; width: 150px; height: 150px;"></div>
+            <div class="protein-ball-3d absolute top-1/2 left-1/4 float-3d" style="animation-delay: 4s; width: 100px; height: 100px;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 scroll-fade-in">
+                <h2 class="text-5xl font-serif font-bold mb-4">Experience ProBite in 3D</h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">Hover over our protein balls to explore each delicious flavor in stunning detail</p>
+            </div>
+
+            <!-- 3D Product Display -->
+            <div class="grid md:grid-cols-4 gap-12 scene-3d mb-16">
+                <!-- Pistachio Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere pistachio"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Pistachio</h3>
+                    <p class="text-gray-400 text-sm">Nutty & Natural</p>
+                </div>
+
+                <!-- Chocolate Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere chocolate"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Chocolate</h3>
+                    <p class="text-gray-400 text-sm">Rich & Decadent</p>
+                </div>
+
+                <!-- Green Energy Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Matcha</h3>
+                    <p class="text-gray-400 text-sm">Energy Boost</p>
+                </div>
+
+                <!-- Orange Ball -->
+                <div class="text-center scroll-fade-in">
+                    <div class="flex justify-center mb-6">
+                        <div class="protein-sphere orange"></div>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold mb-2">Mango</h3>
+                    <p class="text-gray-400 text-sm">Tropical Twist</p>
+                </div>
+            </div>
+
+            <!-- 3D Feature Cards -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="flip-card h-64 scroll-scale">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-probite-orange to-probite-coral p-8 flex flex-col items-center justify-center">
+                            <div class="text-6xl mb-4">🌀</div>
+                            <h3 class="text-2xl font-serif font-bold">360° Quality</h3>
+                            <p class="text-sm mt-2 opacity-90">Hover to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-wellness-green to-fresh-green p-8 flex flex-col items-center justify-center">
+                            <p class="text-center text-lg">Every angle reveals our commitment to premium, all-natural ingredients</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card h-64 scroll-scale">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-fresh-green to-wellness-green p-8 flex flex-col items-center justify-center">
+                            <div class="text-6xl mb-4">💫</div>
+                            <h3 class="text-2xl font-serif font-bold">Handcrafted</h3>
+                            <p class="text-sm mt-2 opacity-90">Hover to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-probite-coral to-probite-orange p-8 flex flex-col items-center justify-center">
+                            <p class="text-center text-lg">Each ball is carefully rolled by hand for perfect texture and taste</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card h-64 scroll-scale">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-yellow-400 to-orange-500 p-8 flex flex-col items-center justify-center">
+                            <div class="text-6xl mb-4">⚡</div>
+                            <h3 class="text-2xl font-serif font-bold">Pure Power</h3>
+                            <p class="text-sm mt-2 opacity-90">Hover to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-green-400 to-emerald-600 p-8 flex flex-col items-center justify-center">
+                            <p class="text-center text-lg">31g of protein packed into every delicious, energy-boosting bite</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Note -->
+            <div class="text-center mt-12 scroll-fade-in">
+                <p class="text-gray-400 text-sm">💡 Tip: Hover over the protein balls and cards to interact with them!</p>
             </div>
         </div>
     </section>
@@ -711,6 +948,29 @@
             const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (window.scrollY / windowHeight) * 100;
             document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // 3D Protein Ball Scroll Rotation
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const proteinSpheres = document.querySelectorAll('.protein-sphere');
+
+            proteinSpheres.forEach((sphere, index) => {
+                const rect = sphere.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+                if (isVisible) {
+                    const rotateAmount = scrolled * 0.1 + (index * 90);
+                    sphere.style.transform = `rotateY(${rotateAmount}deg) rotateX(${rotateAmount * 0.5}deg)`;
+                }
+            });
+
+            // Rotate hero 3D ball on scroll
+            const heroBall = document.querySelector('.parallax-hero .protein-ball-3d');
+            if (heroBall) {
+                const rotation = scrolled * 0.3;
+                heroBall.style.transform = `rotateX(${rotation}deg) rotateY(${rotation}deg) translateY(${scrolled * 0.1}px)`;
+            }
         });
 
         // Auto-Scrolling Gallery
