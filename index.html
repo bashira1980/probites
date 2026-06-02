@@ -50,6 +50,27 @@
             object-fit: cover;
         }
 
+        /* Hide video controls and play button */
+        video::-webkit-media-controls {
+            display: none !important;
+        }
+
+        video::-webkit-media-controls-enclosure {
+            display: none !important;
+        }
+
+        video::-webkit-media-controls-panel {
+            display: none !important;
+        }
+
+        video::-webkit-media-controls-play-button {
+            display: none !important;
+        }
+
+        video::-webkit-media-controls-start-playback-button {
+            display: none !important;
+        }
+
         /* Subtle overlay */
         .video-overlay {
             position: absolute;
@@ -147,13 +168,13 @@
         <div class="video-overlay"></div>
 
         <div class="hero-content px-6">
-            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 drop-shadow-lg">
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 text-probite-orange drop-shadow-2xl">
                 ProBite
             </h1>
-            <p class="text-3xl md:text-4xl font-semibold mb-6 drop-shadow-2xl">
+            <p class="text-3xl md:text-4xl font-semibold mb-6 text-probite-orange drop-shadow-2xl">
                 Fuel Your Day The Smart Way
             </p>
-            <p class="text-2xl md:text-3xl mb-8 drop-shadow-2xl font-bold text-white">
+            <p class="text-2xl md:text-3xl mb-8 font-bold text-probite-orange drop-shadow-2xl">
                 30g of Pure Protein
             </p>
             <a href="#products" class="inline-block bg-probite-orange text-white px-10 py-4 rounded-full hover:bg-probite-coral transition-all font-bold text-lg shadow-2xl hover:shadow-xl transform hover:scale-105">
@@ -161,9 +182,9 @@
             </a>
         </div>
 
-        <div class="scroll-indicator text-white">
-            <div class="text-sm mb-2 font-semibold tracking-wide drop-shadow-lg">SCROLL TO EXPLORE</div>
-            <div class="text-2xl">↓</div>
+        <div class="scroll-indicator text-probite-orange">
+            <div class="text-sm mb-2 font-semibold tracking-wide drop-shadow-2xl">SCROLL TO EXPLORE</div>
+            <div class="text-2xl drop-shadow-2xl">↓</div>
         </div>
     </section>
 
@@ -390,33 +411,47 @@
 
     <!-- JavaScript -->
     <script>
-        // Simple autoplay handling
+        // Aggressive autoplay handling
         const heroVideo = document.getElementById('heroVideo');
 
-        // Force play on load
-        window.addEventListener('load', () => {
-            heroVideo.play().then(() => {
-                console.log('Video auto-playing successfully');
-            }).catch(e => {
-                console.log('Autoplay blocked, trying workaround:', e);
-
-                // Try unmuting and replaying
-                heroVideo.muted = true;
-                heroVideo.play();
-
-                // Fallback: play on any user interaction
-                const playOnInteraction = () => {
-                    heroVideo.play();
-                    document.removeEventListener('click', playOnInteraction);
-                    document.removeEventListener('touchstart', playOnInteraction);
-                    document.removeEventListener('scroll', playOnInteraction);
-                };
-
-                document.addEventListener('click', playOnInteraction);
-                document.addEventListener('touchstart', playOnInteraction);
-                document.addEventListener('scroll', playOnInteraction);
-            });
+        // Try playing immediately
+        heroVideo.play().then(() => {
+            console.log('Video playing');
+        }).catch(e => {
+            console.log('Initial autoplay failed, retrying:', e);
         });
+
+        // Retry on DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            heroVideo.muted = true;
+            heroVideo.play().catch(e => console.log('DOMContentLoaded play failed:', e));
+        });
+
+        // Retry on window load
+        window.addEventListener('load', () => {
+            heroVideo.muted = true;
+            heroVideo.play().catch(e => console.log('Window load play failed:', e));
+        });
+
+        // Play on ANY user interaction
+        const playVideo = () => {
+            heroVideo.muted = true;
+            heroVideo.play().then(() => {
+                console.log('Playing after user interaction');
+                // Remove all listeners once playing
+                document.removeEventListener('click', playVideo);
+                document.removeEventListener('touchstart', playVideo);
+                document.removeEventListener('scroll', playVideo);
+                document.removeEventListener('mousemove', playVideo);
+                document.removeEventListener('keydown', playVideo);
+            });
+        };
+
+        document.addEventListener('click', playVideo);
+        document.addEventListener('touchstart', playVideo);
+        document.addEventListener('scroll', playVideo);
+        document.addEventListener('mousemove', playVideo, { once: true });
+        document.addEventListener('keydown', playVideo, { once: true });
 
         // Fade in animations
         const observer = new IntersectionObserver((entries) => {
