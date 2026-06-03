@@ -181,6 +181,52 @@
         .gallery-image:hover img {
             transform: scale(1.25);
         }
+
+        /* Parallax video containers */
+        .parallax-video-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+
+        .parallax-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            will-change: transform;
+        }
+
+        /* Full-width video sections */
+        .full-video-section {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        .full-video-section video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .video-overlay-dark {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+            z-index: 1;
+        }
+
+        .video-content {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body class="font-sans text-gray-900">
@@ -255,6 +301,26 @@
                 <div>
                     <div class="text-4xl font-bold mb-1">5+</div>
                     <div class="text-sm opacity-90">Delicious Flavors</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full-Width Video Section 1 - Extreme Close-Up -->
+    <section class="full-video-section">
+        <video id="closeupVideo" class="parallax-video" autoplay muted loop playsinline preload="auto">
+            <source src="video-closeup-cropped.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay-dark"></div>
+        <div class="video-content h-full flex items-center justify-center">
+            <div class="text-center px-6 max-w-4xl">
+                <h2 class="text-6xl md:text-7xl font-serif font-bold mb-6 text-white drop-shadow-2xl">Pure Texture</h2>
+                <p class="text-2xl md:text-3xl text-white mb-8 drop-shadow-2xl">
+                    Every bite reveals the artisan quality of our handcrafted protein balls
+                </p>
+                <div class="inline-block bg-white bg-opacity-90 backdrop-blur-sm px-10 py-6 rounded-3xl shadow-2xl">
+                    <div class="text-5xl font-bold text-probite-orange mb-2">30g</div>
+                    <div class="text-gray-800 font-semibold text-xl">Premium Protein</div>
                 </div>
             </div>
         </div>
@@ -342,8 +408,10 @@
                     </div>
                 </div>
                 <div class="parallax-slow fade-in order-1 md:order-2">
-                    <div class="gallery-image shadow-2xl">
-                        <img src="IMG_3313.jpg" alt="Natural Ingredients" class="parallax-image" data-speed="0.5">
+                    <div class="parallax-video-container shadow-2xl" style="height: 70vh;">
+                        <video id="singleVideo" class="parallax-video parallax-image" autoplay muted loop playsinline preload="auto" data-speed="0.4">
+                            <source src="video-single-cropped.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </div>
             </div>
@@ -416,8 +484,10 @@
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="parallax-slow fade-in">
-                    <div class="gallery-image" style="height: 50vh;">
-                        <img src="IMG_3420.jpg" alt="Variety Pack" class="parallax-image" data-speed="0.4">
+                    <div class="parallax-video-container shadow-2xl" style="height: 50vh;">
+                        <video class="parallax-video parallax-image" autoplay muted loop playsinline preload="auto" data-speed="0.4">
+                            <source src="video-closeup-cropped.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </div>
                 <div class="parallax-fast fade-in">
@@ -426,8 +496,10 @@
                     </div>
                 </div>
                 <div class="parallax-slow fade-in">
-                    <div class="gallery-image" style="height: 50vh;">
-                        <img src="IMG_4944.jpg" alt="Collection" class="parallax-image" data-speed="0.5">
+                    <div class="parallax-video-container shadow-2xl" style="height: 50vh;">
+                        <video class="parallax-video parallax-image" autoplay muted loop playsinline preload="auto" data-speed="0.5">
+                            <source src="video-single-cropped.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </div>
             </div>
@@ -540,44 +612,48 @@
 
     <!-- JavaScript -->
     <script>
-        // Wait for video to be ready, then play
+        // Auto-play all videos
         document.addEventListener('DOMContentLoaded', () => {
-            const heroVideo = document.getElementById('heroVideo');
+            // Get all videos
+            const allVideos = document.querySelectorAll('video');
 
-            // Function to attempt play
-            const attemptPlay = () => {
-                heroVideo.muted = true; // Ensure muted
-                heroVideo.play()
+            // Function to attempt play for a video
+            const attemptPlay = (video) => {
+                video.muted = true; // Ensure muted
+                video.play()
                     .then(() => {
-                        console.log('✅ Video is playing');
+                        console.log('✅ Video playing:', video.id || 'unnamed');
                     })
                     .catch(error => {
-                        console.log('⚠️ Autoplay blocked:', error.message);
-                        console.log('👆 Click anywhere to start video');
+                        console.log('⚠️ Autoplay blocked for:', video.id || 'unnamed');
                     });
             };
 
-            // Wait for video to be ready to play
-            if (heroVideo.readyState >= 3) {
-                // Video is already loaded enough to play
-                attemptPlay();
-            } else {
-                // Wait for video to load
-                heroVideo.addEventListener('canplay', attemptPlay, { once: true });
-            }
+            // Try to play each video
+            allVideos.forEach(video => {
+                // Wait for video to be ready to play
+                if (video.readyState >= 3) {
+                    attemptPlay(video);
+                } else {
+                    video.addEventListener('canplay', () => attemptPlay(video), { once: true });
+                }
+            });
 
             // Backup: Try again on full load
-            window.addEventListener('load', attemptPlay, { once: true });
+            window.addEventListener('load', () => {
+                allVideos.forEach(video => attemptPlay(video));
+            }, { once: true });
 
             // Play on any user interaction (backup)
             let hasPlayed = false;
             const playOnInteraction = () => {
                 if (!hasPlayed) {
-                    heroVideo.muted = true;
-                    heroVideo.play().then(() => {
-                        hasPlayed = true;
-                        console.log('▶️ Playing after user interaction');
+                    allVideos.forEach(video => {
+                        video.muted = true;
+                        video.play().catch(() => {});
                     });
+                    hasPlayed = true;
+                    console.log('▶️ All videos playing after user interaction');
                 }
             };
 
@@ -591,18 +667,23 @@
 
         function updateParallax() {
             const scrolled = window.pageYOffset;
-            const parallaxImages = document.querySelectorAll('.parallax-image');
+            const parallaxElements = document.querySelectorAll('.parallax-image');
 
-            parallaxImages.forEach(img => {
-                const speed = parseFloat(img.getAttribute('data-speed')) || 0.5;
-                const rect = img.getBoundingClientRect();
-                const imageTop = rect.top + scrolled;
+            parallaxElements.forEach(element => {
+                const speed = parseFloat(element.getAttribute('data-speed')) || 0.5;
+                const rect = element.getBoundingClientRect();
+                const elementTop = rect.top + scrolled;
                 const windowHeight = window.innerHeight;
 
-                // Only apply parallax if image is in viewport
+                // Only apply parallax if element is in viewport
                 if (rect.top < windowHeight && rect.bottom > 0) {
-                    const yPos = -(scrolled - imageTop) * speed;
-                    img.style.transform = `translateY(${yPos}px) scale(1.2)`;
+                    const yPos = -(scrolled - elementTop) * speed;
+                    // Check if it's a video or image
+                    if (element.tagName === 'VIDEO') {
+                        element.style.transform = `translateY(${yPos}px) scale(1.1)`;
+                    } else {
+                        element.style.transform = `translateY(${yPos}px) scale(1.2)`;
+                    }
                 }
             });
 
