@@ -141,6 +141,46 @@
         video::-webkit-media-controls-panel {
             background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
         }
+
+        /* Parallax Gallery Styles */
+        .parallax-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax-image {
+            transform: translateZ(0);
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        .parallax-slow {
+            transform: translateY(0);
+        }
+
+        .parallax-fast {
+            transform: translateY(0);
+        }
+
+        /* Gallery image containers */
+        .gallery-image {
+            height: 70vh;
+            overflow: hidden;
+            border-radius: 24px;
+            position: relative;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.2);
+            transition: transform 0.3s ease-out;
+        }
+
+        .gallery-image:hover img {
+            transform: scale(1.25);
+        }
     </style>
 </head>
 <body class="font-sans text-gray-900">
@@ -220,6 +260,30 @@
         </div>
     </section>
 
+    <!-- Parallax Gallery Section 1 -->
+    <section class="parallax-section py-32 bg-gradient-to-br from-orange-50 to-amber-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="parallax-slow fade-in">
+                    <div class="gallery-image shadow-2xl">
+                        <img src="IMG_3250.jpg" alt="Pistachio Protein Ball" class="parallax-image" data-speed="0.3">
+                    </div>
+                </div>
+                <div class="parallax-fast fade-in">
+                    <h2 class="text-5xl font-serif font-bold mb-6 text-gray-900">Artisan Crafted</h2>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-6">
+                        Each protein ball is a work of art, meticulously crafted with the finest ingredients.
+                        Our pistachio blend combines nutty richness with powerful nutrition.
+                    </p>
+                    <div class="bg-white p-6 rounded-3xl shadow-lg">
+                        <div class="text-4xl font-bold text-probite-orange mb-2">30g</div>
+                        <div class="text-gray-600">Premium Protein</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Story Section -->
     <section id="story" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
@@ -251,6 +315,36 @@
                 </div>
                 <div class="fade-in">
                     <img src="IMG_4944.jpg" alt="ProBite Collection" class="rounded-3xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Gallery Section 2 -->
+    <section class="parallax-section py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="parallax-fast fade-in order-2 md:order-1">
+                    <h2 class="text-5xl font-serif font-bold mb-6 text-gray-900">Pure Ingredients</h2>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-6">
+                        We source only the highest quality, all-natural ingredients. No shortcuts,
+                        no compromises—just pure, wholesome nutrition in every bite.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-3xl">
+                            <div class="text-3xl font-bold text-probite-orange mb-2">0g</div>
+                            <div class="text-sm text-gray-600">Added Sugar</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-3xl">
+                            <div class="text-3xl font-bold text-probite-orange mb-2">100%</div>
+                            <div class="text-sm text-gray-600">Natural</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="parallax-slow fade-in order-1 md:order-2">
+                    <div class="gallery-image shadow-2xl">
+                        <img src="IMG_3313.jpg" alt="Natural Ingredients" class="parallax-image" data-speed="0.5">
+                    </div>
                 </div>
             </div>
         </div>
@@ -307,6 +401,33 @@
                             <span class="text-4xl font-bold text-probite-orange">30g</span>
                             <span class="text-gray-500">Protein</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Gallery Section 3 -->
+    <section class="parallax-section py-32 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-serif font-bold mb-6">Experience the Collection</h2>
+                <p class="text-xl opacity-90 max-w-2xl mx-auto">Every flavor tells a story of craftsmanship and nutrition</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="parallax-slow fade-in">
+                    <div class="gallery-image" style="height: 50vh;">
+                        <img src="IMG_3420.jpg" alt="Variety Pack" class="parallax-image" data-speed="0.4">
+                    </div>
+                </div>
+                <div class="parallax-fast fade-in">
+                    <div class="gallery-image" style="height: 50vh;">
+                        <img src="IMG_3392.jpg" alt="Chocolate" class="parallax-image" data-speed="0.6">
+                    </div>
+                </div>
+                <div class="parallax-slow fade-in">
+                    <div class="gallery-image" style="height: 50vh;">
+                        <img src="IMG_4944.jpg" alt="Collection" class="parallax-image" data-speed="0.5">
                     </div>
                 </div>
             </div>
@@ -464,6 +585,59 @@
             document.addEventListener('touchstart', playOnInteraction, { once: true });
             document.addEventListener('keydown', playOnInteraction, { once: true });
         });
+
+        // Parallax Gallery Effect
+        let ticking = false;
+
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const parallaxImages = document.querySelectorAll('.parallax-image');
+
+            parallaxImages.forEach(img => {
+                const speed = parseFloat(img.getAttribute('data-speed')) || 0.5;
+                const rect = img.getBoundingClientRect();
+                const imageTop = rect.top + scrolled;
+                const windowHeight = window.innerHeight;
+
+                // Only apply parallax if image is in viewport
+                if (rect.top < windowHeight && rect.bottom > 0) {
+                    const yPos = -(scrolled - imageTop) * speed;
+                    img.style.transform = `translateY(${yPos}px) scale(1.2)`;
+                }
+            });
+
+            // Parallax for text sections
+            document.querySelectorAll('.parallax-slow').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const speed = 0.15;
+                    const yPos = (scrolled - el.offsetTop) * speed;
+                    el.style.transform = `translateY(${yPos}px)`;
+                }
+            });
+
+            document.querySelectorAll('.parallax-fast').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const speed = -0.1;
+                    const yPos = (scrolled - el.offsetTop) * speed;
+                    el.style.transform = `translateY(${yPos}px)`;
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateParallax();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Initial parallax update
+        updateParallax();
 
         // Fade in animations
         const observer = new IntersectionObserver((entries) => {
