@@ -160,10 +160,18 @@
 
     <!-- Video Hero Section - Full Page -->
     <section class="video-hero" id="videoHero">
-        <video id="heroVideo" class="video-player" autoplay muted loop playsinline preload="auto">
+        <video id="heroVideo" class="video-player" autoplay muted loop playsinline preload="auto" poster="">
             <source src="video-combined.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <script>
+            // Immediate play attempt (inline script runs as soon as video loads)
+            (function() {
+                const v = document.getElementById('heroVideo');
+                v.muted = true;
+                v.play().catch(() => {});
+            })();
+        </script>
 
         <div class="video-overlay"></div>
 
@@ -411,47 +419,51 @@
 
     <!-- JavaScript -->
     <script>
-        // Aggressive autoplay handling
-        const heroVideo = document.getElementById('heroVideo');
-
-        // Try playing immediately
-        heroVideo.play().then(() => {
-            console.log('Video playing');
-        }).catch(e => {
-            console.log('Initial autoplay failed, retrying:', e);
-        });
-
-        // Retry on DOM ready
+        // Wait for video to be ready, then play
         document.addEventListener('DOMContentLoaded', () => {
-            heroVideo.muted = true;
-            heroVideo.play().catch(e => console.log('DOMContentLoaded play failed:', e));
+            const heroVideo = document.getElementById('heroVideo');
+
+            // Function to attempt play
+            const attemptPlay = () => {
+                heroVideo.muted = true; // Ensure muted
+                heroVideo.play()
+                    .then(() => {
+                        console.log('✅ Video is playing');
+                    })
+                    .catch(error => {
+                        console.log('⚠️ Autoplay blocked:', error.message);
+                        console.log('👆 Click anywhere to start video');
+                    });
+            };
+
+            // Wait for video to be ready to play
+            if (heroVideo.readyState >= 3) {
+                // Video is already loaded enough to play
+                attemptPlay();
+            } else {
+                // Wait for video to load
+                heroVideo.addEventListener('canplay', attemptPlay, { once: true });
+            }
+
+            // Backup: Try again on full load
+            window.addEventListener('load', attemptPlay, { once: true });
+
+            // Play on any user interaction (backup)
+            let hasPlayed = false;
+            const playOnInteraction = () => {
+                if (!hasPlayed) {
+                    heroVideo.muted = true;
+                    heroVideo.play().then(() => {
+                        hasPlayed = true;
+                        console.log('▶️ Playing after user interaction');
+                    });
+                }
+            };
+
+            document.addEventListener('click', playOnInteraction, { once: true });
+            document.addEventListener('touchstart', playOnInteraction, { once: true });
+            document.addEventListener('keydown', playOnInteraction, { once: true });
         });
-
-        // Retry on window load
-        window.addEventListener('load', () => {
-            heroVideo.muted = true;
-            heroVideo.play().catch(e => console.log('Window load play failed:', e));
-        });
-
-        // Play on ANY user interaction
-        const playVideo = () => {
-            heroVideo.muted = true;
-            heroVideo.play().then(() => {
-                console.log('Playing after user interaction');
-                // Remove all listeners once playing
-                document.removeEventListener('click', playVideo);
-                document.removeEventListener('touchstart', playVideo);
-                document.removeEventListener('scroll', playVideo);
-                document.removeEventListener('mousemove', playVideo);
-                document.removeEventListener('keydown', playVideo);
-            });
-        };
-
-        document.addEventListener('click', playVideo);
-        document.addEventListener('touchstart', playVideo);
-        document.addEventListener('scroll', playVideo);
-        document.addEventListener('mousemove', playVideo, { once: true });
-        document.addEventListener('keydown', playVideo, { once: true });
 
         // Fade in animations
         const observer = new IntersectionObserver((entries) => {
