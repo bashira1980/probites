@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProBite - Premium Protein Nutrition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3 31.8% 91.4%)",
+                        input: "hsl(214.3 31.8% 91.4%)",
+                        ring: "hsl(142.1 76.2% 36.3%)",
+                        background: "hsl(0 0% 100%)",
+                        foreground: "hsl(222.2 84% 4.9%)",
+                        primary: {
+                            DEFAULT: "hsl(142.1 76.2% 36.3%)",
+                            foreground: "hsl(355.7 100% 97.3%)",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(210 40% 96.1%)",
+                            foreground: "hsl(222.2 47.4% 11.2%)",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(210 40% 96.1%)",
+                            foreground: "hsl(215.4 16.3% 46.9%)",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(210 40% 96.1%)",
+                            foreground: "hsl(222.2 47.4% 11.2%)",
+                        },
+                        card: {
+                            DEFAULT: "hsl(0 0% 100%)",
+                            foreground: "hsl(222.2 84% 4.9%)",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "0.5rem",
+                        md: "calc(0.5rem - 2px)",
+                        sm: "calc(0.5rem - 4px)",
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Component styles - v0.dev inspired */
+        .btn {
+            @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+        }
+
+        .btn-primary {
+            @apply bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2;
+        }
+
+        .btn-secondary {
+            @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2;
+        }
+
+        .btn-outline {
+            @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2;
+        }
+
+        .btn-ghost {
+            @apply hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2;
+        }
+
+        .card {
+            @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+        }
+
+        .badge {
+            @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+        }
+
+        .badge-primary {
+            @apply border-transparent bg-primary text-primary-foreground hover:bg-primary/80;
+        }
+
+        .badge-secondary {
+            @apply border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80;
+        }
+
+        .badge-outline {
+            @apply text-foreground;
+        }
+
+        /* Video hero */
+        .hero-video-container {
+            position: relative;
+            height: 90vh;
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Smooth reveals */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Grid fade in */
+        .grid-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .grid-item:nth-child(1) { animation-delay: 0.1s; }
+        .grid-item:nth-child(2) { animation-delay: 0.2s; }
+        .grid-item:nth-child(3) { animation-delay: 0.3s; }
+        .grid-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Video card hover */
+        .video-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+
+        .video-card video {
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover video {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-background font-sans antialiased">
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div class="container mx-auto flex h-16 items-center px-4 md:px-6">
+            <div class="mr-4 flex">
+                <a href="/" class="mr-6 flex items-center space-x-2">
+                    <span class="text-2xl font-bold">ProBite</span>
+                </a>
+            </div>
+            <nav class="flex flex-1 items-center justify-end space-x-6 text-sm font-medium">
+                <a href="#products" class="transition-colors hover:text-foreground/80 text-foreground/60">Products</a>
+                <a href="#nutrition" class="transition-colors hover:text-foreground/80 text-foreground/60">Nutrition</a>
+                <a href="#about" class="transition-colors hover:text-foreground/80 text-foreground/60">About</a>
+                <button class="btn btn-primary">Get Started</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section with Video -->
+        <section class="container mx-auto px-4 md:px-6 py-12 md:py-24">
+            <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+                <div class="flex flex-col justify-center space-y-4">
+                    <div class="space-y-2">
+                        <div class="inline-block">
+                            <span class="badge badge-secondary">100% Natural Ingredients</span>
+                        </div>
+                        <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                            Premium Protein Balls
+                        </h1>
+                        <p class="max-w-[600px] text-muted-foreground md:text-xl">
+                            Fuel your day with 30g of pure protein. Handcrafted nutrition without compromise.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 min-[400px]:flex-row">
+                        <button class="btn btn-primary">Shop Now</button>
+                        <button class="btn btn-outline">Learn More</button>
+                    </div>
+                    <div class="flex items-center gap-6 pt-4">
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-bold">30g</span>
+                            <span class="text-xs text-muted-foreground">Protein</span>
+                        </div>
+                        <div class="h-12 w-px bg-border"></div>
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-bold">0g</span>
+                            <span class="text-xs text-muted-foreground">Added Sugar</span>
+                        </div>
+                        <div class="h-12 w-px bg-border"></div>
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-bold">220</span>
+                            <span class="text-xs text-muted-foreground">Calories</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-video-container">
+                    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+                        <source src="video-combined.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute bottom-4 right-4">
+                        <span class="badge badge-primary">Watch Our Story</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="border-t bg-muted/50 py-12 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="grid gap-6 md:grid-cols-3">
+                    <div class="card p-6 grid-item">
+                        <div class="mb-4 inline-block rounded-lg bg-primary/10 p-3 text-primary">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">100% Natural</h3>
+                        <p class="text-muted-foreground">
+                            No artificial flavors, colors, or preservatives. Just real, wholesome ingredients.
+                        </p>
+                    </div>
+                    <div class="card p-6 grid-item">
+                        <div class="mb-4 inline-block rounded-lg bg-primary/10 p-3 text-primary">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">High Protein</h3>
+                        <p class="text-muted-foreground">
+                            Each ball packs 30g of premium protein to support your active lifestyle.
+                        </p>
+                    </div>
+                    <div class="card p-6 grid-item">
+                        <div class="mb-4 inline-block rounded-lg bg-primary/10 p-3 text-primary">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Artisan Crafted</h3>
+                        <p class="text-muted-foreground">
+                            Handmade in small batches with meticulous attention to quality.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="py-12 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+                    <div class="space-y-2">
+                        <span class="badge badge-outline">Our Products</span>
+                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">Choose Your Flavor</h2>
+                        <p class="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
+                            Each flavor is carefully crafted with premium ingredients for maximum taste and nutrition.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Product 1: Pistachio -->
+                    <div class="card overflow-hidden group">
+                        <div class="aspect-square overflow-hidden">
+                            <img src="IMG_3250.jpg" alt="Pistachio" class="object-cover w-full h-full transition-transform group-hover:scale-105" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-xl font-bold">Pistachio Dream</h3>
+                                <span class="badge badge-primary">30g</span>
+                            </div>
+                            <p class="text-muted-foreground mb-4">
+                                Rich nutty flavor with pure protein power
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold">$4.99</span>
+                                <button class="btn btn-outline">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2: Chocolate -->
+                    <div class="card overflow-hidden group">
+                        <div class="aspect-square overflow-hidden">
+                            <img src="IMG_3392.jpg" alt="Chocolate" class="object-cover w-full h-full transition-transform group-hover:scale-105" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-xl font-bold">Dark Chocolate</h3>
+                                <span class="badge badge-primary">30g</span>
+                            </div>
+                            <p class="text-muted-foreground mb-4">
+                                Decadent taste with zero added sugar
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold">$4.99</span>
+                                <button class="btn btn-outline">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3: Variety Pack -->
+                    <div class="card overflow-hidden group">
+                        <div class="aspect-square overflow-hidden">
+                            <img src="IMG_3420.jpg" alt="Variety Pack" class="object-cover w-full h-full transition-transform group-hover:scale-105" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-xl font-bold">Variety Pack</h3>
+                                <span class="badge badge-secondary">Best Value</span>
+                            </div>
+                            <p class="text-muted-foreground mb-4">
+                                Try all our premium flavors in one pack
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold">$24.99</span>
+                                <button class="btn btn-outline">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Showcase Section -->
+        <section class="border-t bg-muted/50 py-12 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+                    <div class="video-card aspect-video lg:aspect-square">
+                        <video autoplay muted loop playsinline preload="auto">
+                            <source src="video-closeup-cropped.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div class="space-y-2">
+                            <span class="badge badge-outline">Handcrafted Quality</span>
+                            <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">
+                                Every Detail Matters
+                            </h2>
+                            <p class="text-muted-foreground md:text-lg">
+                                We meticulously craft each protein ball with premium ingredients—crushed pistachios,
+                                organic dates, pure whey protein, and superfoods your body craves.
+                            </p>
+                        </div>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <svg class="h-5 w-5 text-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-sm">No artificial preservatives or additives</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="h-5 w-5 text-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-sm">Made fresh in small batches</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="h-5 w-5 text-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-sm">Quality tested for purity and nutrition</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Section -->
+        <section id="nutrition" class="py-12 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="grid gap-6 lg:grid-cols-2 lg:gap-12">
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div class="space-y-2">
+                            <span class="badge badge-outline">Nutrition Facts</span>
+                            <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">
+                                Science-Backed Nutrition
+                            </h2>
+                            <p class="text-muted-foreground md:text-lg">
+                                Designed by nutritionists, perfected by nature. Every ProBite delivers exactly
+                                what your body needs—nothing more, nothing less.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-6">Per Ball (One Serving)</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between pb-4 border-b">
+                                <span class="text-sm font-medium">Protein</span>
+                                <span class="text-2xl font-bold text-primary">30g</span>
+                            </div>
+                            <div class="flex items-center justify-between pb-4 border-b">
+                                <span class="text-sm font-medium">Calories</span>
+                                <span class="text-2xl font-bold">220</span>
+                            </div>
+                            <div class="flex items-center justify-between pb-4 border-b">
+                                <span class="text-sm font-medium">Carbohydrates</span>
+                                <span class="text-2xl font-bold">12g</span>
+                            </div>
+                            <div class="flex items-center justify-between pb-4 border-b">
+                                <span class="text-sm font-medium">Healthy Fats</span>
+                                <span class="text-2xl font-bold">8g</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium">Added Sugar</span>
+                                <span class="text-2xl font-bold text-primary">0g</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-6 border-t">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Gluten-Free</span>
+                                <span class="badge badge-secondary">No Artificial Colors</span>
+                                <span class="badge badge-secondary">No Preservatives</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="border-t bg-primary text-primary-foreground py-12 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                    <div class="space-y-2">
+                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
+                            Ready to fuel your journey?
+                        </h2>
+                        <p class="max-w-[600px] text-primary-foreground/90 md:text-xl">
+                            Join thousands who've made ProBite part of their daily routine.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 min-[400px]:flex-row">
+                        <button class="btn bg-background text-foreground hover:bg-background/90 h-12 px-8">
+                            Shop Now
+                        </button>
+                        <button class="btn border-primary-foreground/20 bg-primary text-primary-foreground hover:bg-primary/80 h-12 px-8">
+                            Subscribe & Save 20%
+                        </button>
+                    </div>
+                    <div class="pt-8 grid grid-cols-3 gap-8 max-w-2xl">
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl font-bold">50K+</span>
+                            <span class="text-sm text-primary-foreground/80">Happy Customers</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl font-bold">4.9★</span>
+                            <span class="text-sm text-primary-foreground/80">Average Rating</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-4xl font-bold">1M+</span>
+                            <span class="text-sm text-primary-foreground/80">Balls Sold</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t py-12">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold">ProBite</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Premium protein nutrition for your active lifestyle.
+                    </p>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="text-sm font-semibold">Products</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">All Flavors</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Variety Packs</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Subscriptions</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="text-sm font-semibold">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Our Story</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-3">
+                    <h4 class="text-sm font-semibold">Follow Us</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Instagram</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Facebook</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
+                <p>&copy; 2026 ProBite. All rights reserved. Built with v0-inspired components.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Auto-play videos
+        document.addEventListener('DOMContentLoaded', () => {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.muted = true;
+                video.play().catch(() => {});
+            });
+
+            // Reveal animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

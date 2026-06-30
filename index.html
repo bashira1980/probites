@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProBite - Fuel Your Day The Smart Way</title>
+    <title>ProBite - Fuel Your Greatness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'serif': ['Lora', 'serif'],
-                        'sans': ['Raleway', 'sans-serif'],
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Bebas Neue', 'cursive'],
                     },
                     colors: {
-                        'probite-orange': '#EA580C',
-                        'probite-coral': '#F97316',
+                        neon: {
+                            green: '#00ff88',
+                            blue: '#00d4ff',
+                            purple: '#a855f7',
+                        }
                     },
                 }
             }
@@ -26,87 +29,126 @@
     </script>
     <style>
         * {
-            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Video Hero Section - Full Page */
-        .video-hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
+        body {
             background: #000;
+            color: #fff;
+            overflow-x: hidden;
         }
 
-        .video-player {
+        /* HERO - Full Screen Video */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .hero-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-
-        /* Hide video controls and play button */
-        video::-webkit-media-controls {
-            display: none !important;
-        }
-
-        video::-webkit-media-controls-enclosure {
-            display: none !important;
-        }
-
-        video::-webkit-media-controls-panel {
-            display: none !important;
-        }
-
-        video::-webkit-media-controls-play-button {
-            display: none !important;
-        }
-
-        video::-webkit-media-controls-start-playback-button {
-            display: none !important;
-        }
-
-        /* Subtle overlay */
-        .video-overlay {
-            position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.8) 100%);
         }
 
         .hero-content {
-            position: absolute;
-            bottom: 80px;
-            left: 0;
-            right: 0;
-            z-index: 2;
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            color: white;
+            padding: 2rem;
         }
 
-        /* Floating nav */
-        .floating-nav {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
+        /* Glitch Text Effect */
+        .glitch {
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.05em;
+            font-family: 'Bebas Neue', cursive;
+            text-transform: uppercase;
+            position: relative;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 20px #00ff88);
+            }
+            to {
+                filter: drop-shadow(0 0 40px #00d4ff);
+            }
+        }
+
+        /* Neon Button */
+        .neon-btn {
+            position: relative;
+            padding: 1.5rem 4rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: transparent;
+            border: 3px solid #00ff88;
+            color: #00ff88;
+            cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
-        /* Scroll indicator */
+        .neon-btn:hover {
+            background: #00ff88;
+            color: #000;
+            box-shadow: 0 0 30px #00ff88, 0 0 60px #00ff88;
+            transform: scale(1.05);
+        }
+
+        .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            transition: left 0.5s;
+        }
+
+        .neon-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
-            bottom: 20px;
+            bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
             animation: bounce 2s infinite;
         }
 
@@ -115,635 +157,575 @@
             50% { transform: translateX(-50%) translateY(-10px); }
         }
 
-        /* Fade in animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Product cards */
-        .product-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-
-        /* Video controls styling */
-        video::-webkit-media-controls-panel {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
-        }
-
-        /* Parallax Gallery Styles */
-        .parallax-section {
+        /* Full Screen Video Sections */
+        .video-section {
             position: relative;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
             overflow: hidden;
         }
 
-        .parallax-image {
-            transform: translateZ(0);
-            will-change: transform;
-            transition: transform 0.1s ease-out;
-        }
-
-        .parallax-slow {
-            transform: translateY(0);
-        }
-
-        .parallax-fast {
-            transform: translateY(0);
-        }
-
-        /* Gallery image containers */
-        .gallery-image {
-            height: 70vh;
-            overflow: hidden;
-            border-radius: 24px;
-            position: relative;
-        }
-
-        .gallery-image img {
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scale(1.2);
-            transition: transform 0.3s ease-out;
-        }
-
-        .gallery-image:hover img {
-            transform: scale(1.25);
-        }
-
-        /* Parallax video containers */
-        .parallax-video-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 24px;
-        }
-
-        .parallax-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.1);
-            will-change: transform;
-        }
-
-        /* Full-width video sections */
-        .full-video-section {
-            position: relative;
-            height: 80vh;
-            overflow: hidden;
-        }
-
-        .full-video-section video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-
-        .video-overlay-dark {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
-            z-index: 1;
         }
 
         .video-content {
             position: relative;
-            z-index: 2;
+            z-index: 10;
+            width: 100%;
+            padding: 4rem 2rem;
+        }
+
+        /* Floating Cards */
+        .floating-card {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 1rem;
+            padding: 3rem;
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .floating-card:hover {
+            transform: translateY(-20px);
+            border-color: #00ff88;
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            cursor: pointer;
+            aspect-ratio: 3/4;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.15);
+        }
+
+        .product-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover .product-overlay {
+            background: linear-gradient(to top, rgba(0,255,136,0.9) 0%, transparent 60%);
+        }
+
+        /* Stats Counter */
+        .stat-number {
+            font-size: 5rem;
+            font-family: 'Bebas Neue', cursive;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Horizontal Scroll */
+        .horizontal-scroll-wrapper {
+            position: relative;
+            height: 100vh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .horizontal-scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .horizontal-content {
+            display: flex;
+            height: 100%;
+        }
+
+        .scroll-item {
+            flex: 0 0 100vw;
+            height: 100%;
+            scroll-snap-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Neon Grid Lines */
+        .grid-lines {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 255, 136, 0.8);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .glitch {
+                font-size: clamp(3rem, 12vw, 6rem);
+            }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-number {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
-<body class="font-sans text-gray-900">
+<body>
+    <!-- Grid Lines Background -->
+    <div class="grid-lines"></div>
 
-    <!-- Floating Navigation -->
-    <nav class="floating-nav fixed w-full top-0 z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="text-3xl font-serif font-bold text-probite-orange">ProBite</div>
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#story" class="text-gray-700 hover:text-probite-orange transition-colors font-medium">Our Story</a>
-                <a href="#products" class="text-gray-700 hover:text-probite-orange transition-colors font-medium">Products</a>
-                <a href="#nutrition" class="text-gray-700 hover:text-probite-orange transition-colors font-medium">Nutrition</a>
-                <a href="#contact" class="bg-probite-orange text-white px-6 py-3 rounded-full hover:bg-probite-coral transition-all font-semibold">Shop Now</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Video Hero Section - Full Page -->
-    <section class="video-hero" id="videoHero">
-        <video id="heroVideo" class="video-player" autoplay muted loop playsinline preload="auto" poster="">
+    <!-- SECTION 1: HERO -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
             <source src="video-combined.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
-        <script>
-            // Immediate play attempt (inline script runs as soon as video loads)
-            (function() {
-                const v = document.getElementById('heroVideo');
-                v.muted = true;
-                v.play().catch(() => {});
-            })();
-        </script>
+        <div class="hero-overlay"></div>
 
-        <div class="video-overlay"></div>
-
-        <div class="hero-content px-6">
-            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 text-probite-orange drop-shadow-2xl">
-                ProBite
-            </h1>
-            <p class="text-3xl md:text-4xl font-semibold mb-6 text-probite-orange drop-shadow-2xl">
-                Fuel Your Day The Smart Way
-            </p>
-            <p class="text-2xl md:text-3xl mb-8 font-bold text-probite-orange drop-shadow-2xl">
-                30g of Pure Protein
-            </p>
-            <a href="#products" class="inline-block bg-probite-orange text-white px-10 py-4 rounded-full hover:bg-probite-coral transition-all font-bold text-lg shadow-2xl hover:shadow-xl transform hover:scale-105">
-                Explore Flavors
-            </a>
+        <div class="hero-content">
+            <div class="reveal active">
+                <h1 class="glitch">PROBITE</h1>
+                <p style="font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 300; margin: 2rem 0; letter-spacing: 0.2em;">
+                    30G PURE POWER
+                </p>
+                <button class="neon-btn">
+                    ENTER THE EXPERIENCE
+                </button>
+            </div>
         </div>
 
-        <div class="scroll-indicator text-probite-orange">
-            <div class="text-sm mb-2 font-semibold tracking-wide drop-shadow-2xl">SCROLL TO EXPLORE</div>
-            <div class="text-2xl drop-shadow-2xl">↓</div>
+        <div class="scroll-indicator">
+            <span style="font-size: 0.75rem; letter-spacing: 0.2em;">SCROLL</span>
+            <svg width="24" height="24" fill="none" stroke="#00ff88" stroke-width="2">
+                <path d="M12 5v14m0 0l-7-7m7 7l7-7"/>
+            </svg>
         </div>
     </section>
 
-    <!-- Quick Stats Bar -->
-    <section class="bg-probite-orange text-white py-8">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                <div>
-                    <div class="text-4xl font-bold mb-1">30g</div>
-                    <div class="text-sm opacity-90">Protein Per Ball</div>
+    <!-- SECTION 2: STATS -->
+    <section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #000; position: relative;">
+        <div style="max-width: 1400px; padding: 4rem 2rem; width: 100%;">
+            <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-family: 'Bebas Neue', cursive; font-size: clamp(3rem, 8vw, 6rem); color: #00ff88; margin-bottom: 1rem;">
+                    THE NUMBERS DON'T LIE
+                </h2>
+                <p style="font-size: 1.5rem; color: #888;">Pure nutrition, backed by results</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem;">
+                <div class="floating-card reveal" style="text-align: center;">
+                    <div class="stat-number pulse">30G</div>
+                    <p style="font-size: 1.25rem; color: #00ff88; margin-top: 1rem; font-weight: 600;">PROTEIN</p>
+                    <p style="color: #888; margin-top: 0.5rem;">Per Ball</p>
                 </div>
-                <div>
-                    <div class="text-4xl font-bold mb-1">100%</div>
-                    <div class="text-sm opacity-90">Natural Ingredients</div>
+
+                <div class="floating-card reveal" style="text-align: center; transition-delay: 0.1s;">
+                    <div class="stat-number pulse">0G</div>
+                    <p style="font-size: 1.25rem; color: #00ff88; margin-top: 1rem; font-weight: 600;">ADDED SUGAR</p>
+                    <p style="color: #888; margin-top: 0.5rem;">Zero Compromise</p>
                 </div>
-                <div>
-                    <div class="text-4xl font-bold mb-1">0g</div>
-                    <div class="text-sm opacity-90">Added Sugar</div>
+
+                <div class="floating-card reveal" style="text-align: center; transition-delay: 0.2s;">
+                    <div class="stat-number pulse">100%</div>
+                    <p style="font-size: 1.25rem; color: #00ff88; margin-top: 1rem; font-weight: 600;">NATURAL</p>
+                    <p style="color: #888; margin-top: 0.5rem;">Real Ingredients</p>
                 </div>
-                <div>
-                    <div class="text-4xl font-bold mb-1">5+</div>
-                    <div class="text-sm opacity-90">Delicious Flavors</div>
+
+                <div class="floating-card reveal" style="text-align: center; transition-delay: 0.3s;">
+                    <div class="stat-number pulse">220</div>
+                    <p style="font-size: 1.25rem; color: #00ff88; margin-top: 1rem; font-weight: 600;">CALORIES</p>
+                    <p style="color: #888; margin-top: 0.5rem;">Efficient Energy</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Full-Width Video Section 1 - Extreme Close-Up -->
-    <section class="full-video-section">
-        <video id="closeupVideo" class="parallax-video" autoplay muted loop playsinline preload="auto">
+    <!-- FOUNDER INTRO SECTION -->
+    <section style="min-height: 100vh; background: #000; display: flex; align-items: center; padding: 4rem 0;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem; width: 100%;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                <div class="reveal">
+                    <h2 style="font-family: 'Bebas Neue', cursive; font-size: clamp(3rem, 8vw, 6rem); color: #00ff88; margin-bottom: 2rem; line-height: 0.9;">
+                        MEET THE<br/>
+                        FOUNDER
+                    </h2>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #ccc; margin-bottom: 2rem;">
+                        Discover the story behind ProBite and our mission to deliver premium,
+                        handcrafted protein nutrition that fuels your active lifestyle.
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <span style="padding: 0.5rem 1rem; background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); border-radius: 2rem; font-size: 0.875rem; color: #00ff88;">
+                            🌱 100% Natural
+                        </span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); border-radius: 2rem; font-size: 0.875rem; color: #00ff88;">
+                            ✋ Handcrafted
+                        </span>
+                        <span style="padding: 0.5rem 1rem; background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); border-radius: 2rem; font-size: 0.875rem; color: #00ff88;">
+                            🚫 Zero Added Sugar
+                        </span>
+                    </div>
+                </div>
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <div style="position: relative; border-radius: 1rem; overflow: hidden; border: 2px solid rgba(0,255,136,0.3); box-shadow: 0 0 40px rgba(0,255,136,0.2);">
+                        <video id="founderVideo" controls style="width: 100%; display: block;">
+                            <source src="video-founder-intro.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INGREDIENTS SECTION -->
+    <section style="min-height: 100vh; background: linear-gradient(to bottom, #000 0%, #001a0f 100%); padding: 6rem 0;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-family: 'Bebas Neue', cursive; font-size: clamp(3rem, 8vw, 6rem); color: #00ff88;">
+                    WHAT'S INSIDE
+                </h2>
+                <p style="font-size: 1.5rem; color: #888;">Pure ingredients, zero compromise</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+                <!-- Ingredients List -->
+                <div class="floating-card reveal">
+                    <h3 style="font-family: 'Bebas Neue', cursive; font-size: 2.5rem; color: #00ff88; margin-bottom: 2rem;">
+                        INGREDIENTS
+                    </h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <div style="flex: 1 1 45%; padding: 1.5rem; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 0.75rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🥜</div>
+                            <div style="font-weight: 600; color: #00ff88; margin-bottom: 0.25rem;">Peanut Butter</div>
+                            <div style="font-size: 0.875rem; color: #888;">Rich protein source</div>
+                        </div>
+                        <div style="flex: 1 1 45%; padding: 1.5rem; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 0.75rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌾</div>
+                            <div style="font-weight: 600; color: #00ff88; margin-bottom: 0.25rem;">Oat Flour</div>
+                            <div style="font-size: 0.875rem; color: #888;">Gluten Free</div>
+                        </div>
+                        <div style="flex: 1 1 45%; padding: 1.5rem; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 0.75rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🍦</div>
+                            <div style="font-weight: 600; color: #00ff88; margin-bottom: 0.25rem;">Vanilla</div>
+                            <div style="font-size: 0.875rem; color: #888;">Natural flavor</div>
+                        </div>
+                        <div style="flex: 1 1 45%; padding: 1.5rem; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 0.75rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🍁</div>
+                            <div style="font-weight: 600; color: #00ff88; margin-bottom: 0.25rem;">Maple Syrup</div>
+                            <div style="font-size: 0.875rem; color: #888;">Sugar Free</div>
+                        </div>
+                        <div style="flex: 1 1 45%; padding: 1.5rem; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 0.75rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🍫</div>
+                            <div style="font-weight: 600; color: #00ff88; margin-bottom: 0.25rem;">Dark Chocolate</div>
+                            <div style="font-size: 0.875rem; color: #888;">Rich & pure</div>
+                        </div>
+                        <div style="flex: 1 1 45%; padding: 1.5rem; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 0.75rem;">
+                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🥥</div>
+                            <div style="font-weight: 600; color: #00ff88; margin-bottom: 0.25rem;">Coconut Oil</div>
+                            <div style="font-size: 0.875rem; color: #888;">Healthy fats</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0,255,136,0.1); border-radius: 0.75rem;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                            <span style="padding: 0.5rem 1rem; background: #000; border-radius: 2rem; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(0,255,136,0.3);">
+                                ✓ Dairy Free
+                            </span>
+                            <span style="padding: 0.5rem 1rem; background: #000; border-radius: 2rem; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(0,255,136,0.3);">
+                                ✓ Gluten Free
+                            </span>
+                            <span style="padding: 0.5rem 1rem; background: #000; border-radius: 2rem; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(0,255,136,0.3);">
+                                ✓ Zero Added Sugar
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nutrition Facts -->
+                <div class="floating-card reveal" style="transition-delay: 0.2s;">
+                    <h3 style="font-family: 'Bebas Neue', cursive; font-size: 2.5rem; color: #00ff88; margin-bottom: 2rem;">
+                        NUTRITION FACTS
+                    </h3>
+                    <div style="padding: 1.5rem; background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); border-radius: 0.75rem; margin-bottom: 2rem;">
+                        <div style="font-size: 0.875rem; color: #888; margin-bottom: 1rem;">
+                            5 Servings per cup (100g)<br/>
+                            Serving size: 1 bite approx. 20g
+                        </div>
+                        <div style="border-top: 2px solid #00ff88; padding-top: 1rem;">
+                            <div style="font-weight: 600; margin-bottom: 1rem;">AMOUNT PER SERVING</div>
+
+                            <div style="display: flex; justify-between; padding: 1rem 0; border-bottom: 1px solid rgba(0,255,136,0.2);">
+                                <span style="font-weight: 600;">Calories</span>
+                                <span style="font-size: 1.5rem; font-weight: 700; color: #00ff88;">60</span>
+                            </div>
+
+                            <div style="display: flex; justify-between; padding: 1rem 0; border-bottom: 1px solid rgba(0,255,136,0.2);">
+                                <span>Protein</span>
+                                <span style="font-weight: 700; color: #00ff88;">1.5g</span>
+                            </div>
+
+                            <div style="display: flex; justify-between; padding: 1rem 0; border-bottom: 1px solid rgba(0,255,136,0.2);">
+                                <span>Fiber</span>
+                                <span style="font-weight: 700; color: #00ff88;">1.5g</span>
+                            </div>
+
+                            <div style="display: flex; justify-between; padding: 1rem 0; border-bottom: 1px solid rgba(0,255,136,0.2);">
+                                <span>Carbs</span>
+                                <span style="font-weight: 700;">4g</span>
+                            </div>
+
+                            <div style="display: flex; justify-between; padding: 1rem 0; border-bottom: 1px solid rgba(0,255,136,0.2);">
+                                <span>Fat</span>
+                                <span style="font-weight: 700;">4g</span>
+                            </div>
+
+                            <div style="display: flex; justify-between; padding: 1rem 0;">
+                                <span>Sugar</span>
+                                <span style="font-weight: 700;">2g</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding: 1.5rem; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); border-radius: 0.75rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.5rem;">
+                            COOKIE DOUGH BITES
+                        </div>
+                        <div style="font-size: 0.875rem; color: #888;">
+                            *Nutrition values shown for Cookie Dough flavor
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: TEXTURE VIDEO -->
+    <section class="video-section">
+        <video class="video-bg" autoplay muted loop playsinline preload="auto">
             <source src="video-closeup-cropped.mp4" type="video/mp4">
         </video>
-        <div class="video-overlay-dark"></div>
-        <div class="video-content h-full flex items-center justify-center">
-            <div class="text-center px-6 max-w-4xl">
-                <h2 class="text-6xl md:text-7xl font-serif font-bold mb-6 text-white drop-shadow-2xl">Pure Texture</h2>
-                <p class="text-2xl md:text-3xl text-white mb-8 drop-shadow-2xl">
-                    Every bite reveals the artisan quality of our handcrafted protein balls
-                </p>
-                <div class="inline-block bg-white bg-opacity-90 backdrop-blur-sm px-10 py-6 rounded-3xl shadow-2xl">
-                    <div class="text-5xl font-bold text-probite-orange mb-2">30g</div>
-                    <div class="text-gray-800 font-semibold text-xl">Premium Protein</div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.6);"></div>
 
-    <!-- Parallax Gallery Section 1 -->
-    <section class="parallax-section py-32 bg-gradient-to-br from-orange-50 to-amber-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="parallax-slow fade-in">
-                    <div class="gallery-image shadow-2xl">
-                        <img src="IMG_3250.jpg" alt="Pistachio Protein Ball" class="parallax-image" data-speed="0.3">
-                    </div>
-                </div>
-                <div class="parallax-fast fade-in">
-                    <h2 class="text-5xl font-serif font-bold mb-6 text-gray-900">Artisan Crafted</h2>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-6">
-                        Each protein ball is a work of art, meticulously crafted with the finest ingredients.
-                        Our pistachio blend combines nutty richness with powerful nutrition.
+        <div class="video-content">
+            <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                <div></div>
+                <div class="reveal">
+                    <h2 style="font-family: 'Bebas Neue', cursive; font-size: clamp(3rem, 8vw, 6rem); line-height: 0.9; margin-bottom: 2rem;">
+                        CRAFTED<br/>
+                        NOT<br/>
+                        MANUFACTURED
+                    </h2>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #ccc; margin-bottom: 2rem;">
+                        Every ProBite is meticulously handcrafted with premium ingredients.
+                        No shortcuts. No compromises. Just pure, artisan nutrition.
                     </p>
-                    <div class="bg-white p-6 rounded-3xl shadow-lg">
-                        <div class="text-4xl font-bold text-probite-orange mb-2">30g</div>
-                        <div class="text-gray-600">Premium Protein</div>
-                    </div>
+                    <button class="neon-btn" style="padding: 1rem 3rem; font-size: 1rem;">
+                        DISCOVER THE CRAFT
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Story Section -->
-    <section id="story" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="fade-in">
-                    <h2 class="text-5xl font-serif font-bold mb-6">Handcrafted Perfection</h2>
-                    <p class="text-xl text-gray-600 mb-6 leading-relaxed">
-                        Every ProBite protein ball is carefully crafted with premium, all-natural ingredients.
-                        No artificial flavors, no preservatives, just pure, wholesome nutrition.
-                    </p>
-                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-                        With <span class="font-bold text-probite-orange">30g of protein</span> per ball,
-                        we've perfected the balance of taste and nutrition to fuel your active lifestyle.
-                    </p>
-                    <div class="grid grid-cols-3 gap-6 text-center">
-                        <div>
-                            <div class="text-4xl font-bold text-probite-orange mb-2">30g</div>
-                            <div class="text-sm text-gray-600">Protein</div>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-bold text-probite-orange mb-2">0g</div>
-                            <div class="text-sm text-gray-600">Added Sugar</div>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-bold text-probite-orange mb-2">100%</div>
-                            <div class="text-sm text-gray-600">Natural</div>
-                        </div>
-                    </div>
+    <!-- SECTION 4: PRODUCTS -->
+    <section style="min-height: 100vh; background: #000; padding: 6rem 0;">
+        <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-family: 'Bebas Neue', cursive; font-size: clamp(3rem, 8vw, 6rem); color: #00ff88;">
+                CHOOSE YOUR WEAPON
+            </h2>
+            <p style="font-size: 1.5rem; color: #888;">Premium flavors for elite performance</p>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card reveal">
+                <img src="IMG_3250.jpg" alt="Pistachio">
+                <div class="product-overlay">
+                    <h3 style="font-family: 'Bebas Neue', cursive; font-size: 3rem; margin-bottom: 0.5rem;">PISTACHIO</h3>
+                    <p style="font-size: 1.25rem; margin-bottom: 1rem;">30G Protein Power</p>
+                    <button class="neon-btn" style="padding: 0.75rem 2rem; font-size: 0.875rem; width: 100%;">
+                        ADD TO ARSENAL
+                    </button>
                 </div>
-                <div class="fade-in">
-                    <img src="IMG_4944.jpg" alt="ProBite Collection" class="rounded-3xl shadow-2xl">
+            </div>
+
+            <div class="product-card reveal" style="transition-delay: 0.1s;">
+                <img src="IMG_3392.jpg" alt="Chocolate">
+                <div class="product-overlay">
+                    <h3 style="font-family: 'Bebas Neue', cursive; font-size: 3rem; margin-bottom: 0.5rem;">CHOCOLATE</h3>
+                    <p style="font-size: 1.25rem; margin-bottom: 1rem;">Dark & Dangerous</p>
+                    <button class="neon-btn" style="padding: 0.75rem 2rem; font-size: 0.875rem; width: 100%;">
+                        ADD TO ARSENAL
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" style="transition-delay: 0.2s;">
+                <img src="IMG_3420.jpg" alt="Variety">
+                <div class="product-overlay">
+                    <h3 style="font-family: 'Bebas Neue', cursive; font-size: 3rem; margin-bottom: 0.5rem;">VARIETY PACK</h3>
+                    <p style="font-size: 1.25rem; margin-bottom: 1rem;">Complete Arsenal</p>
+                    <button class="neon-btn" style="padding: 0.75rem 2rem; font-size: 0.875rem; width: 100%;">
+                        DOMINATE ALL
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Parallax Gallery Section 2 -->
-    <section class="parallax-section py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="parallax-fast fade-in order-2 md:order-1">
-                    <h2 class="text-5xl font-serif font-bold mb-6 text-gray-900">Pure Ingredients</h2>
-                    <p class="text-xl text-gray-600 leading-relaxed mb-6">
-                        We source only the highest quality, all-natural ingredients. No shortcuts,
-                        no compromises—just pure, wholesome nutrition in every bite.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-3xl">
-                            <div class="text-3xl font-bold text-probite-orange mb-2">0g</div>
-                            <div class="text-sm text-gray-600">Added Sugar</div>
-                        </div>
-                        <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-3xl">
-                            <div class="text-3xl font-bold text-probite-orange mb-2">100%</div>
-                            <div class="text-sm text-gray-600">Natural</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="parallax-slow fade-in order-1 md:order-2">
-                    <div class="parallax-video-container shadow-2xl" style="height: 70vh;">
-                        <video id="singleVideo" class="parallax-video parallax-image" autoplay muted loop playsinline preload="auto" data-speed="0.4">
-                            <source src="video-single-cropped.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
+    <!-- SECTION 5: SINGLE BALL VIDEO -->
+    <section class="video-section">
+        <video class="video-bg" autoplay muted loop playsinline preload="auto">
+            <source src="video-single-cropped.mp4" type="video/mp4">
+        </video>
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.9) 100%);"></div>
+
+        <div class="video-content" style="text-align: center;">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 class="reveal" style="font-family: 'Bebas Neue', cursive; font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin-bottom: 2rem;">
+                    PERFECTION<br/>
+                    IN EVERY<br/>
+                    DETAIL
+                </h2>
             </div>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section id="products" class="py-24 bg-gradient-to-br from-orange-50 to-amber-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl font-serif font-bold mb-4">Our Flavors</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Premium protein balls in flavors that fuel your body and delight your taste buds</p>
+    <!-- SECTION 6: CTA -->
+    <section style="min-height: 100vh; background: #000; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+        <!-- Animated background -->
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(0,255,136,0.1), transparent 70%); animation: pulse 4s infinite;"></div>
+
+        <div style="text-align: center; padding: 2rem; max-width: 1000px; position: relative; z-index: 10;">
+            <h2 class="reveal" style="font-family: 'Bebas Neue', cursive; font-size: clamp(4rem, 12vw, 10rem); line-height: 0.9; margin-bottom: 2rem;">
+                FUEL YOUR<br/>
+                GREATNESS
+            </h2>
+
+            <p class="reveal" style="font-size: clamp(1.25rem, 3vw, 2rem); color: #888; margin-bottom: 3rem; transition-delay: 0.1s;">
+                Join 50,000+ athletes who trust ProBite
+            </p>
+
+            <div class="reveal" style="transition-delay: 0.2s;">
+                <button class="neon-btn" style="font-size: 1.5rem; padding: 2rem 5rem;">
+                    START YOUR JOURNEY
+                </button>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Pistachio -->
-                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg fade-in">
-                    <div class="h-80 overflow-hidden">
-                        <img src="IMG_3250.jpg" alt="Pistachio" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-serif font-bold mb-3">Pistachio</h3>
-                        <p class="text-gray-600 mb-4">Nutty, wholesome goodness with natural pistachios</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-4xl font-bold text-probite-orange">30g</span>
-                            <span class="text-gray-500">Protein</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Variety Pack -->
-                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg fade-in">
-                    <div class="h-80 overflow-hidden">
-                        <img src="IMG_3420.jpg" alt="Variety Pack" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-serif font-bold mb-3">Variety Pack</h3>
-                        <p class="text-gray-600 mb-4">All our delicious flavors in one pack</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-4xl font-bold text-probite-orange">3</span>
-                            <span class="text-gray-500">Flavors</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chocolate -->
-                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg fade-in">
-                    <div class="h-80 overflow-hidden">
-                        <img src="IMG_3392.jpg" alt="Chocolate" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-3xl font-serif font-bold mb-3">Chocolate</h3>
-                        <p class="text-gray-600 mb-4">Rich, decadent chocolate meets pure protein</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-4xl font-bold text-probite-orange">30g</span>
-                            <span class="text-gray-500">Protein</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Parallax Gallery Section 3 -->
-    <section class="parallax-section py-32 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl font-serif font-bold mb-6">Experience the Collection</h2>
-                <p class="text-xl opacity-90 max-w-2xl mx-auto">Every flavor tells a story of craftsmanship and nutrition</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="parallax-slow fade-in">
-                    <div class="parallax-video-container shadow-2xl" style="height: 50vh;">
-                        <video class="parallax-video parallax-image" autoplay muted loop playsinline preload="auto" data-speed="0.4">
-                            <source src="video-closeup-cropped.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-                <div class="parallax-fast fade-in">
-                    <div class="gallery-image" style="height: 50vh;">
-                        <img src="IMG_3392.jpg" alt="Chocolate" class="parallax-image" data-speed="0.6">
-                    </div>
-                </div>
-                <div class="parallax-slow fade-in">
-                    <div class="parallax-video-container shadow-2xl" style="height: 50vh;">
-                        <video class="parallax-video parallax-image" autoplay muted loop playsinline preload="auto" data-speed="0.5">
-                            <source src="video-single-cropped.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Nutrition Section -->
-    <section id="nutrition" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="fade-in order-2 md:order-1">
-                    <img src="IMG_3286.jpg" alt="Ingredients" class="rounded-3xl shadow-2xl">
-                </div>
-                <div class="fade-in order-1 md:order-2">
-                    <h2 class="text-5xl font-serif font-bold mb-6">Nutrition That Works</h2>
-                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-                        Designed by nutritionists, perfected by nature. Every ProBite is packed with
-                        premium protein, healthy fats, and clean carbs.
-                    </p>
-
-                    <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-3xl p-8 mb-8">
-                        <h3 class="text-2xl font-bold mb-6">Per Ball Nutrition</h3>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span class="text-lg font-semibold">Protein</span>
-                                <span class="text-3xl font-bold text-probite-orange">30g</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span class="text-lg font-semibold">Calories</span>
-                                <span class="text-2xl font-bold">220</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span class="text-lg font-semibold">Carbs</span>
-                                <span class="text-2xl font-bold">12g</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span class="text-lg font-semibold">Healthy Fats</span>
-                                <span class="text-2xl font-bold">8g</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-lg font-semibold">Added Sugar</span>
-                                <span class="text-2xl font-bold text-probite-orange">0g</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 text-sm text-gray-600">
-                        <span>🌱</span>
-                        <span>Gluten-Free • No Artificial Colors • No Preservatives</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="contact" class="py-24 bg-gradient-to-br from-probite-orange to-probite-coral text-white">
-        <div class="max-w-4xl mx-auto px-6 text-center fade-in">
-            <h2 class="text-5xl md:text-6xl font-serif font-bold mb-6">Ready to Fuel Your Day?</h2>
-            <p class="text-2xl mb-10 opacity-90">Join thousands who've made ProBite part of their daily routine</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#" class="bg-white text-probite-orange px-12 py-5 rounded-full hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 text-center font-bold text-xl">
-                    Order Now
-                </a>
-                <a href="#" class="border-2 border-white text-white px-12 py-5 rounded-full hover:bg-white hover:text-probite-orange transition-all shadow-lg text-center font-bold text-xl">
-                    Contact Us
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-12">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8">
+            <!-- Social Proof -->
+            <div class="reveal" style="display: flex; justify-content: center; gap: 4rem; margin-top: 4rem; transition-delay: 0.3s;">
                 <div>
-                    <div class="text-3xl font-serif font-bold text-probite-orange mb-4">ProBite</div>
-                    <p class="text-sm">Fuel Your Day The Smart Way</p>
+                    <div class="stat-number" style="font-size: 3rem;">50K+</div>
+                    <p style="color: #888; margin-top: 0.5rem;">Athletes</p>
                 </div>
                 <div>
-                    <h5 class="font-semibold text-white mb-4">Products</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">All Flavors</a></li>
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">Variety Packs</a></li>
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">Subscriptions</a></li>
-                    </ul>
+                    <div class="stat-number" style="font-size: 3rem;">4.9★</div>
+                    <p style="color: #888; margin-top: 0.5rem;">Rating</p>
                 </div>
                 <div>
-                    <h5 class="font-semibold text-white mb-4">Company</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">About Us</a></li>
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">Our Story</a></li>
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-semibold text-white mb-4">Follow Us</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">Instagram</a></li>
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">Facebook</a></li>
-                        <li><a href="#" class="hover:text-probite-orange transition-colors">Twitter</a></li>
-                    </ul>
+                    <div class="stat-number" style="font-size: 3rem;">1M+</div>
+                    <p style="color: #888; margin-top: 0.5rem;">Served</p>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-                <p>&copy; 2026 ProBite. All rights reserved.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background: #000; border-top: 1px solid rgba(0,255,136,0.2); padding: 3rem 2rem;">
+        <div style="max-width: 1400px; margin: 0 auto; text-align: center;">
+            <div style="font-family: 'Bebas Neue', cursive; font-size: 3rem; color: #00ff88; margin-bottom: 2rem;">
+                PROBITE
             </div>
+            <p style="color: #666; margin-bottom: 2rem;">
+                Premium Protein Nutrition • Handcrafted Excellence
+            </p>
+            <p style="color: #333; font-size: 0.875rem;">
+                © 2026 ProBite. All rights reserved. Designed for champions.
+            </p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        // Auto-play all videos
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get all videos
-            const allVideos = document.querySelectorAll('video');
-
-            // Function to attempt play for a video
-            const attemptPlay = (video) => {
-                video.muted = true; // Ensure muted
-                video.play()
-                    .then(() => {
-                        console.log('✅ Video playing:', video.id || 'unnamed');
-                    })
-                    .catch(error => {
-                        console.log('⚠️ Autoplay blocked for:', video.id || 'unnamed');
-                    });
-            };
-
-            // Try to play each video
-            allVideos.forEach(video => {
-                // Wait for video to be ready to play
-                if (video.readyState >= 3) {
-                    attemptPlay(video);
-                } else {
-                    video.addEventListener('canplay', () => attemptPlay(video), { once: true });
-                }
-            });
-
-            // Backup: Try again on full load
-            window.addEventListener('load', () => {
-                allVideos.forEach(video => attemptPlay(video));
-            }, { once: true });
-
-            // Play on any user interaction (backup)
-            let hasPlayed = false;
-            const playOnInteraction = () => {
-                if (!hasPlayed) {
-                    allVideos.forEach(video => {
-                        video.muted = true;
-                        video.play().catch(() => {});
-                    });
-                    hasPlayed = true;
-                    console.log('▶️ All videos playing after user interaction');
-                }
-            };
-
-            document.addEventListener('click', playOnInteraction, { once: true });
-            document.addEventListener('touchstart', playOnInteraction, { once: true });
-            document.addEventListener('keydown', playOnInteraction, { once: true });
+        // Auto-play videos
+        document.querySelectorAll('video').forEach(video => {
+            video.muted = true;
+            video.play().catch(() => {});
         });
 
-        // Parallax Gallery Effect
-        let ticking = false;
-
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.parallax-image');
-
-            parallaxElements.forEach(element => {
-                const speed = parseFloat(element.getAttribute('data-speed')) || 0.5;
-                const rect = element.getBoundingClientRect();
-                const elementTop = rect.top + scrolled;
-                const windowHeight = window.innerHeight;
-
-                // Only apply parallax if element is in viewport
-                if (rect.top < windowHeight && rect.bottom > 0) {
-                    const yPos = -(scrolled - elementTop) * speed;
-                    // Check if it's a video or image
-                    if (element.tagName === 'VIDEO') {
-                        element.style.transform = `translateY(${yPos}px) scale(1.1)`;
-                    } else {
-                        element.style.transform = `translateY(${yPos}px) scale(1.2)`;
-                    }
-                }
-            });
-
-            // Parallax for text sections
-            document.querySelectorAll('.parallax-slow').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    const speed = 0.15;
-                    const yPos = (scrolled - el.offsetTop) * speed;
-                    el.style.transform = `translateY(${yPos}px)`;
-                }
-            });
-
-            document.querySelectorAll('.parallax-fast').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    const speed = -0.1;
-                    const yPos = (scrolled - el.offsetTop) * speed;
-                    el.style.transform = `translateY(${yPos}px)`;
-                }
-            });
-        }
-
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    updateParallax();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-
-        // Initial parallax update
-        updateParallax();
-
-        // Fade in animations
-        const observer = new IntersectionObserver((entries) => {
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('active');
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+        reveals.forEach(reveal => revealObserver.observe(reveal));
     </script>
-
 </body>
 </html>

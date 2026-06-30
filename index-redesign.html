@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProBite - 30g of Pure Energy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Lora', 'serif'],
+                        'sans': ['Raleway', 'sans-serif'],
+                    },
+                    colors: {
+                        'nature-green': '#15803D',
+                        'wellness-accent': '#059669',
+                        'energy-pink': '#EC4899',
+                        'aurora-blue': '#0080FF',
+                        'aurora-magenta': '#FF1493',
+                        'aurora-cyan': '#00FFFF',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
+        /* Aurora Gradient Background */
+        .aurora-bg {
+            background: conic-gradient(from 180deg at 50% 50%,
+                #0080FF 0deg,
+                #FF1493 120deg,
+                #00FFFF 240deg,
+                #0080FF 360deg);
+            background-size: 200% 200%;
+            animation: aurora-flow 12s ease infinite;
+            filter: saturate(1.3) blur(60px);
+            opacity: 0.4;
+        }
+
+        @keyframes aurora-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Full-screen video hero */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+
+        /* Parallax layers */
+        .parallax-layer {
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Kinetic Typography */
+        .kinetic-text {
+            background: linear-gradient(90deg, #15803D, #059669, #15803D);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        /* Chapter sections */
+        .chapter {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Scroll progress indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #15803D, #059669, #EC4899);
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Horizontal scroll container */
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .horizontal-item {
+            flex: 0 0 80vw;
+            scroll-snap-align: center;
+            margin-right: 2rem;
+        }
+
+        /* Floating navigation */
+        .floating-nav {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+
+        /* Video with parallax */
+        .parallax-video-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 2rem;
+        }
+
+        .parallax-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.2);
+        }
+
+        /* Reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Split screen layout */
+        .split-screen {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .split-screen {
+                grid-template-columns: 1fr;
+            }
+            .horizontal-item {
+                flex: 0 0 90vw;
+            }
+        }
+
+        /* Mesh gradient overlay */
+        .mesh-gradient {
+            background:
+                radial-gradient(circle at 20% 50%, rgba(21, 128, 61, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(5, 150, 105, 0.3), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.2), transparent 50%);
+        }
+
+        /* Sticky sections */
+        .sticky-section {
+            position: sticky;
+            top: 0;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 bg-white">
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Floating Glass Navigation -->
+    <nav class="floating-nav glass px-8 py-4 rounded-full shadow-2xl">
+        <div class="flex items-center gap-8">
+            <div class="text-2xl font-serif font-bold text-nature-green">ProBite</div>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="#story" class="hover:text-wellness-accent transition-colors">Story</a>
+                <a href="#flavors" class="hover:text-wellness-accent transition-colors">Flavors</a>
+                <a href="#nutrition" class="hover:text-wellness-accent transition-colors">Nutrition</a>
+                <a href="#shop" class="bg-nature-green text-white px-6 py-2 rounded-full hover:bg-wellness-accent transition-all">Shop</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chapter 1: Hero - Full Screen Video -->
+    <section class="hero-section chapter" id="hero">
+        <!-- Aurora Background Layer -->
+        <div class="aurora-bg absolute inset-0 z-0"></div>
+
+        <!-- Video Background -->
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
+            <source src="video-combined.mp4" type="video/mp4">
+        </video>
+
+        <!-- Dark Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/70 z-10"></div>
+
+        <!-- Content -->
+        <div class="relative z-20 w-full px-6 text-center">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-7xl md:text-9xl font-serif font-bold mb-6 text-white drop-shadow-2xl reveal">
+                    ProBite
+                </h1>
+                <p class="text-3xl md:text-5xl font-bold mb-8 reveal kinetic-text" style="transition-delay: 0.2s;">
+                    30g of Pure Energy
+                </p>
+                <p class="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto reveal" style="transition-delay: 0.4s;">
+                    Artisan-crafted protein balls that fuel your day with 100% natural ingredients, zero added sugar, and uncompromising nutrition.
+                </p>
+                <a href="#story" class="inline-block glass-dark text-white px-12 py-5 rounded-full hover:scale-105 transition-all shadow-2xl font-bold text-lg reveal" style="transition-delay: 0.6s;">
+                    Begin Your Journey ↓
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 2: The Texture Story - Full Width Video -->
+    <section class="chapter bg-gradient-to-br from-green-50 to-emerald-50 mesh-gradient" id="story">
+        <div class="w-full">
+            <div class="max-w-7xl mx-auto px-6 py-24">
+                <!-- Title -->
+                <div class="text-center mb-16 reveal">
+                    <span class="text-wellness-accent font-bold text-sm uppercase tracking-wider">Chapter 01</span>
+                    <h2 class="text-6xl md:text-7xl font-serif font-bold mt-4 mb-6">Every Bite Tells a Story</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Handcrafted with precision, packed with nutrition, perfected for you.
+                    </p>
+                </div>
+
+                <!-- Split Screen: Video + Text -->
+                <div class="split-screen">
+                    <div class="parallax-video-wrapper shadow-2xl reveal" style="height: 70vh;">
+                        <video class="parallax-video parallax-layer" autoplay muted loop playsinline preload="auto" data-speed="0.3">
+                            <source src="video-closeup-cropped.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-4xl font-serif font-bold mb-6 text-gray-900">Artisan Crafted, Science Backed</h3>
+                        <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                            Every ProBite is meticulously crafted with premium ingredients—crushed pistachios, organic dates,
+                            pure whey protein, and superfoods that your body craves.
+                        </p>
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                            We don't believe in shortcuts. No artificial flavors, no preservatives, no added sugar.
+                            Just real food, real nutrition, real results.
+                        </p>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="glass p-6 rounded-2xl text-center">
+                                <div class="text-4xl font-bold text-nature-green mb-2">30g</div>
+                                <div class="text-sm text-gray-600">Protein</div>
+                            </div>
+                            <div class="glass p-6 rounded-2xl text-center">
+                                <div class="text-4xl font-bold text-nature-green mb-2">0g</div>
+                                <div class="text-sm text-gray-600">Added Sugar</div>
+                            </div>
+                            <div class="glass p-6 rounded-2xl text-center">
+                                <div class="text-4xl font-bold text-nature-green mb-2">100%</div>
+                                <div class="text-sm text-gray-600">Natural</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 3: The Flavors - Horizontal Scroll -->
+    <section class="chapter bg-white py-24" id="flavors">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-wellness-accent font-bold text-sm uppercase tracking-wider">Chapter 02</span>
+                <h2 class="text-6xl md:text-7xl font-serif font-bold mt-4 mb-6">Choose Your Flavor</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Each flavor is a unique blend of taste and nutrition, crafted for the modern athlete.
+                </p>
+            </div>
+
+            <!-- Horizontal Scrolling Gallery -->
+            <div class="horizontal-scroll pb-8">
+                <!-- Flavor 1: Pistachio -->
+                <div class="horizontal-item reveal">
+                    <div class="glass-dark rounded-3xl overflow-hidden shadow-2xl h-96 relative group">
+                        <img src="IMG_3250.jpg" alt="Pistachio" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                            <h3 class="text-4xl font-serif font-bold mb-3">Pistachio Dream</h3>
+                            <p class="text-lg mb-4 opacity-90">Nutty richness meets pure protein power</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-3xl font-bold">30g</span>
+                                <span class="text-sm opacity-75">Protein per ball</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flavor 2: Variety Pack -->
+                <div class="horizontal-item reveal" style="transition-delay: 0.1s;">
+                    <div class="glass-dark rounded-3xl overflow-hidden shadow-2xl h-96 relative group">
+                        <img src="IMG_3420.jpg" alt="Variety" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                            <h3 class="text-4xl font-serif font-bold mb-3">Variety Pack</h3>
+                            <p class="text-lg mb-4 opacity-90">Experience all our premium flavors</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-3xl font-bold">6</span>
+                                <span class="text-sm opacity-75">Flavors to explore</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flavor 3: Chocolate -->
+                <div class="horizontal-item reveal" style="transition-delay: 0.2s;">
+                    <div class="glass-dark rounded-3xl overflow-hidden shadow-2xl h-96 relative group">
+                        <img src="IMG_3392.jpg" alt="Chocolate" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                            <h3 class="text-4xl font-serif font-bold mb-3">Dark Chocolate</h3>
+                            <p class="text-lg mb-4 opacity-90">Decadent taste, pure nutrition</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-3xl font-bold">30g</span>
+                                <span class="text-sm opacity-75">Protein per ball</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flavor 4: Video showcase -->
+                <div class="horizontal-item reveal" style="transition-delay: 0.3s;">
+                    <div class="glass-dark rounded-3xl overflow-hidden shadow-2xl h-96 relative">
+                        <video class="w-full h-full object-cover" autoplay muted loop playsinline preload="auto">
+                            <source src="video-single-cropped.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                            <h3 class="text-4xl font-serif font-bold mb-3">Pure Perfection</h3>
+                            <p class="text-lg opacity-90">Every ball is a masterpiece</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 4: Nutrition Science -->
+    <section class="chapter bg-gradient-to-br from-gray-900 to-gray-800 text-white py-24" id="nutrition">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="split-screen">
+                <div class="reveal">
+                    <span class="text-wellness-accent font-bold text-sm uppercase tracking-wider">Chapter 03</span>
+                    <h2 class="text-6xl md:text-7xl font-serif font-bold mt-4 mb-8">Nutrition That Works</h2>
+                    <p class="text-xl text-gray-300 mb-12 leading-relaxed">
+                        Designed by nutritionists, perfected by nature. Every ProBite delivers exactly what your body needs—nothing more, nothing less.
+                    </p>
+
+                    <!-- Nutrition Table -->
+                    <div class="glass-dark rounded-3xl p-8 space-y-6">
+                        <h3 class="text-2xl font-bold mb-6">Per Ball Nutrition</h3>
+                        <div class="flex justify-between items-center pb-6 border-b border-white/10">
+                            <span class="text-lg">Protein</span>
+                            <span class="text-4xl font-bold text-wellness-accent">30g</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-6 border-b border-white/10">
+                            <span class="text-lg">Calories</span>
+                            <span class="text-3xl font-bold">220</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-6 border-b border-white/10">
+                            <span class="text-lg">Carbs</span>
+                            <span class="text-3xl font-bold">12g</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-6 border-b border-white/10">
+                            <span class="text-lg">Healthy Fats</span>
+                            <span class="text-3xl font-bold">8g</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg">Added Sugar</span>
+                            <span class="text-3xl font-bold text-wellness-accent">0g</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex items-center gap-3 text-sm text-gray-300">
+                        <span>🌱</span>
+                        <span>Gluten-Free • No Artificial Colors • No Preservatives</span>
+                    </div>
+                </div>
+
+                <div class="reveal" style="transition-delay: 0.2s;">
+                    <img src="IMG_3286.jpg" alt="Ingredients" class="rounded-3xl shadow-2xl w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 5: CTA - The Climax -->
+    <section class="chapter bg-gradient-to-br from-nature-green via-wellness-accent to-nature-green relative overflow-hidden" id="shop">
+        <!-- Aurora overlay -->
+        <div class="aurora-bg absolute inset-0 z-0"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center text-white py-32">
+            <span class="text-white/80 font-bold text-sm uppercase tracking-wider reveal">Chapter 04</span>
+            <h2 class="text-6xl md:text-8xl font-serif font-bold mt-4 mb-8 reveal" style="transition-delay: 0.1s;">
+                Ready to Fuel Your Journey?
+            </h2>
+            <p class="text-2xl md:text-3xl mb-12 opacity-90 reveal" style="transition-delay: 0.2s;">
+                Join thousands who've made ProBite part of their daily ritual
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center reveal" style="transition-delay: 0.3s;">
+                <a href="#" class="glass text-white px-14 py-6 rounded-full hover:scale-105 transition-all shadow-2xl font-bold text-xl border-2 border-white/30">
+                    Order Now →
+                </a>
+                <a href="#" class="bg-white text-nature-green px-14 py-6 rounded-full hover:scale-105 transition-all shadow-2xl font-bold text-xl">
+                    Subscribe & Save 20%
+                </a>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="mt-20 grid grid-cols-3 gap-8 max-w-3xl mx-auto reveal" style="transition-delay: 0.4s;">
+                <div class="glass-dark p-6 rounded-2xl">
+                    <div class="text-4xl font-bold mb-2">50K+</div>
+                    <div class="text-sm opacity-80">Happy Customers</div>
+                </div>
+                <div class="glass-dark p-6 rounded-2xl">
+                    <div class="text-4xl font-bold mb-2">4.9★</div>
+                    <div class="text-sm opacity-80">Average Rating</div>
+                </div>
+                <div class="glass-dark p-6 rounded-2xl">
+                    <div class="text-4xl font-bold mb-2">1M+</div>
+                    <div class="text-sm opacity-80">Balls Sold</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="text-3xl font-serif font-bold text-white mb-4">ProBite</div>
+                    <p class="text-sm">Fuel Your Day The Smart Way</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Products</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">All Flavors</a></li>
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">Variety Packs</a></li>
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">Subscriptions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Company</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">Our Story</a></li>
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Follow</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">Instagram</a></li>
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">Facebook</a></li>
+                        <li><a href="#" class="hover:text-wellness-accent transition-colors">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-sm">
+                <p>&copy; 2026 ProBite. All rights reserved. Designed with UI/UX Pro Max.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Auto-play all videos
+        document.addEventListener('DOMContentLoaded', () => {
+            const allVideos = document.querySelectorAll('video');
+
+            allVideos.forEach(video => {
+                video.muted = true;
+                if (video.readyState >= 3) {
+                    video.play().catch(() => {});
+                } else {
+                    video.addEventListener('canplay', () => {
+                        video.play().catch(() => {});
+                    }, { once: true });
+                }
+            });
+
+            // Scroll progress bar
+            const scrollProgress = document.getElementById('scrollProgress');
+            window.addEventListener('scroll', () => {
+                const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = (window.pageYOffset / windowHeight) * 100;
+                scrollProgress.style.width = scrolled + '%';
+            });
+
+            // Parallax effect for videos and images
+            let ticking = false;
+            function updateParallax() {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.parallax-layer');
+
+                parallaxElements.forEach(element => {
+                    const speed = parseFloat(element.getAttribute('data-speed')) || 0.5;
+                    const rect = element.getBoundingClientRect();
+                    const elementTop = rect.top + scrolled;
+                    const windowHeight = window.innerHeight;
+
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        const yPos = -(scrolled - elementTop) * speed;
+                        element.style.transform = `translateY(${yPos}px) scale(1.2)`;
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateParallax();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // Reveal animations on scroll
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
