@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProBite - Natural Protein Energy</title>
+    <title>ProBite - Guilt-Free Healthy Snacks | Lebanon</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -18,389 +18,260 @@
                     },
                     colors: {
                         'lime': '#A4D65E',
-                        'lime-light': '#C4E78E',
                         'lime-dark': '#7CB83D',
                         'coral': '#FF9B71',
-                        'coral-light': '#FFBFA0',
                         'cream': '#F5F1E8',
-                        'cream-dark': '#E8E0D0',
-                        'earth': '#D4C4B0',
                     },
                 }
             }
         }
     </script>
     <style>
-        * {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: #F5F1E8;
-            overflow-x: hidden;
-        }
-
-        /* Smooth scroll snap */
-        .scroll-section {
-            scroll-snap-align: start;
-            min-height: 100vh;
-        }
-
-        /* Hero gradient */
-        .hero-gradient {
-            background: linear-gradient(135deg, #A4D65E 0%, #FF9B71 100%);
-        }
-
-        /* Floating nav */
-        .nav-blur {
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Smooth fade in */
         .fade-in {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
-
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Parallax image */
-        .parallax-img {
-            transform: translateY(var(--scroll-offset, 0));
-            transition: transform 0.1s linear;
-        }
-
-        /* Badge circle */
-        .badge-circle {
-            background: linear-gradient(135deg, #A4D65E, #7CB83D);
-            border-radius: 50%;
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 40px rgba(164, 214, 94, 0.3);
-        }
-
-        /* Product card */
         .product-card {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .product-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(164, 214, 94, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #A4D65E, #FF9B71);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Video container */
-        .video-container {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Ingredient card */
-        .ingredient-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .ingredient-card:hover {
-            border-color: #A4D65E;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(164, 214, 94, 0.2);
-        }
-
-        /* Sticky section transitions */
-        .sticky-section {
-            position: sticky;
+        .hero-video-container {
+            position: absolute;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
         }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
-
-        ::-webkit-scrollbar-track {
-            background: #E8E0D0;
+        .video-background-section {
+            position: relative;
+            overflow: hidden;
         }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #A4D65E, #FF9B71);
-            border-radius: 10px;
+        .video-background-section video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 0;
         }
-
-        /* Animated blob */
-        @keyframes blob {
-            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        .video-overlay {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.3);
         }
-
-        .blob {
-            animation: blob 8s ease-in-out infinite;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-gradient {
-                min-height: 80vh;
-            }
+        .content-overlay {
+            position: relative;
+            z-index: 2;
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="font-sans bg-white">
 
-    <!-- Floating Navigation -->
-    <nav class="nav-blur fixed w-full top-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center">
-                <img src="logo.png" alt="ProBite Logo" class="h-32 md:h-36 w-auto">
-            </div>
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#story" class="text-gray-600 hover:text-lime transition-colors font-medium">Story</a>
-                <a href="#products" class="text-gray-600 hover:text-lime transition-colors font-medium">Products</a>
-                <a href="#ingredients" class="text-gray-600 hover:text-lime transition-colors font-medium">Ingredients</a>
-                <button class="bg-gradient-to-r from-lime to-lime-dark text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all hover:scale-105">
-                    Shop Now
-                </button>
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="flex items-center">
+                    <img src="logo.png" alt="ProBite" class="h-24 w-auto">
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#shop" class="text-gray-700 hover:text-lime font-medium transition-colors">Shop</a>
+                    <a href="#bundles" class="text-gray-700 hover:text-lime font-medium transition-colors">Bundles</a>
+                    <a href="#story" class="text-gray-700 hover:text-lime font-medium transition-colors">Our Story</a>
+                    <a href="#contact" class="text-gray-700 hover:text-lime font-medium transition-colors">Contact</a>
+                    <a href="https://wa.me/96176145767" target="_blank" class="bg-lime text-white px-6 py-3 rounded-full font-semibold hover:bg-lime-dark transition-all inline-flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        Order on WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section - Full Screen Video -->
-    <section class="scroll-section relative overflow-hidden" style="min-height: 100vh; padding-top: 80px;">
-        <!-- Full Screen Background Video -->
-        <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="" class="absolute top-0 left-0 w-full h-full object-cover" style="pointer-events: none;">
-            <source src="video-combined.mp4" type="video/mp4">
-        </video>
-        <script>
-            // Force play immediately
-            (function() {
-                const v = document.getElementById('heroVideo');
-                v.muted = true;
-                v.play().catch(() => {});
-            })();
-        </script>
-
-        <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-br from-lime/40 via-transparent to-coral/40 z-10"></div>
-        <div class="absolute inset-0 bg-black/30 z-10"></div>
-
-        <div class="max-w-7xl mx-auto px-6 py-20 relative z-20">
-            <div class="flex items-center min-h-[90vh]">
-                <div class="max-w-3xl fade-in">
-                    <div class="inline-block bg-white/20 backdrop-blur-md px-6 py-3 rounded-full text-white text-sm font-medium mb-6 border border-white/30">
-                        🌱 100% Natural Ingredients
-                    </div>
-                    <h1 class="text-7xl md:text-8xl font-display font-bold text-white mb-6 leading-tight drop-shadow-2xl">
-                        Pure Protein,<br/>Natural Energy
-                    </h1>
-                    <p class="text-2xl text-white mb-12 leading-relaxed drop-shadow-lg">
-                        Handcrafted protein balls made with real ingredients.
-                        No added sugar, no compromise on taste.
-                    </p>
-                    <div class="flex flex-wrap gap-4 mb-12">
-                        <button class="bg-white text-lime-dark px-10 py-5 rounded-full font-bold text-lg hover:shadow-2xl transition-all hover:scale-105">
-                            Discover Flavors
-                        </button>
-                        <button class="border-2 border-white text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-lime-dark transition-all backdrop-blur-sm">
-                            Watch Story
-                        </button>
-                    </div>
-                    <div class="flex gap-12 bg-black/20 backdrop-blur-md rounded-3xl p-8 border border-white/20">
-                        <div class="text-center">
-                            <div class="text-5xl font-display font-bold text-white mb-2 drop-shadow-lg">1.5g</div>
-                            <div class="text-white/90 font-medium">Protein</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-5xl font-display font-bold text-white mb-2 drop-shadow-lg">60</div>
-                            <div class="text-white/90 font-medium">Calories</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-5xl font-display font-bold text-white mb-2 drop-shadow-lg">0g</div>
-                            <div class="text-white/90 font-medium">Added Sugar</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden min-h-screen flex items-center">
+        <!-- Background Video -->
+        <div class="hero-video-container">
+            <video class="hero-video" autoplay muted loop playsinline preload="auto">
+                <source src="video-combined.mp4" type="video/mp4">
+            </video>
         </div>
-    </section>
-
-    <!-- Founder Story -->
-    <section id="story" class="scroll-section py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black/40 z-1"></div>
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-32 relative z-10 w-full">
+            <div class="max-w-3xl">
                 <div class="fade-in">
-                    <div class="video-container">
-                        <video controls class="w-full">
-                            <source src="video-founder-intro.mp4" type="video/mp4">
-                        </video>
+                    <div class="inline-block bg-lime/90 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                        🌱 100% Natural • No Added Sugar
                     </div>
-                </div>
-                <div class="fade-in" style="transition-delay: 0.2s;">
-                    <div class="inline-flex items-center gap-2 bg-lime/10 px-4 py-2 rounded-full text-lime-dark font-medium mb-6">
-                        <span class="w-2 h-2 bg-lime rounded-full animate-pulse"></span>
-                        Our Story
-                    </div>
-                    <h2 class="text-5xl font-display font-bold mb-6 text-gray-800">
-                        Crafted With <span class="gradient-text">Passion</span>
-                    </h2>
-                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        Every ProBite is handcrafted with love and the finest natural ingredients.
-                        We believe in real food that fuels your body and delights your taste buds.
+                    <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 leading-tight">
+                        Guilt-Free Treats<br/>
+                        That Actually<br/>
+                        <span class="text-lime">Taste Amazing</span>
+                    </h1>
+                    <p class="text-xl text-white/90 mb-8 leading-relaxed">
+                        Handcrafted protein balls, date bites & cookie dough bites. Clean ingredients, zero added sugar, maximum flavor.
                     </p>
-                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                        No shortcuts. No artificial anything. Just pure, wholesome nutrition
-                        that you can feel good about.
-                    </p>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="bg-lime/10 text-lime-dark px-4 py-2 rounded-full text-sm font-medium">
-                            ✓ Handcrafted Daily
-                        </span>
-                        <span class="bg-lime/10 text-lime-dark px-4 py-2 rounded-full text-sm font-medium">
-                            ✓ Gluten Free
-                        </span>
-                        <span class="bg-lime/10 text-lime-dark px-4 py-2 rounded-full text-sm font-medium">
-                            ✓ Dairy Free
-                        </span>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#shop" class="bg-lime text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-lime-dark transition-all text-center shadow-xl">
+                            Shop Now
+                        </a>
+                        <a href="https://wa.me/96176145767" target="_blank" class="bg-white/90 text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all text-center inline-flex items-center justify-center gap-2 shadow-xl">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                            Order on WhatsApp
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- All Flavors Showcase -->
-    <section class="scroll-section py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12 fade-in">
-                <div class="inline-flex items-center gap-2 bg-coral/10 px-4 py-2 rounded-full text-coral font-medium mb-6">
-                    <span class="w-2 h-2 bg-coral rounded-full animate-pulse"></span>
-                    Our Full Range
+    <!-- Trust Badges -->
+    <section class="bg-white py-12 border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-lime mb-2">100%</div>
+                    <div class="text-sm text-gray-600">Natural Ingredients</div>
                 </div>
-                <h2 class="text-5xl md:text-6xl font-display font-bold mb-6">
-                    Five Delicious <span class="gradient-text">Flavors</span>
-                </h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
-                    From classic favorites to innovative combinations - all handcrafted with premium ingredients
-                </p>
-            </div>
-            <div class="fade-in max-w-5xl mx-auto">
-                <img src="all-flavors-showcase.jpg" alt="All ProBite Flavors" class="w-full rounded-3xl shadow-2xl">
+                <div>
+                    <div class="text-3xl font-bold text-lime mb-2">0g</div>
+                    <div class="text-sm text-gray-600">Added Sugar</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-lime mb-2">60 cal</div>
+                    <div class="text-sm text-gray-600">Per Bite</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-lime mb-2">🇱🇧</div>
+                    <div class="text-sm text-gray-600">Handmade in Lebanon</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Products -->
-    <section id="products" class="scroll-section py-24 bg-cream">
-        <div class="max-w-7xl mx-auto px-6">
+    <!-- Shop Section -->
+    <section id="shop" class="py-20 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="text-center mb-16 fade-in">
-                <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full text-coral font-medium mb-6">
-                    <span class="w-2 h-2 bg-coral rounded-full animate-pulse"></span>
-                    Featured Products
-                </div>
-                <h2 class="text-5xl md:text-6xl font-display font-bold mb-6">
-                    Shop Our <span class="gradient-text">Best Sellers</span>
-                </h2>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">Shop Our Flavors</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Start with our most popular flavors
+                    Choose your favorites or try them all
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Product 1 -->
-                <div class="product-card fade-in">
-                    <div class="aspect-square overflow-hidden">
-                        <img src="IMG_3250.jpg" alt="Pistachio" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                    </div>
+                <!-- Pistachio -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in">
+                    <img src="IMG_3250.jpg" alt="Pistachio Protein Balls" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <div class="flex items-start justify-between mb-3">
-                            <h3 class="text-2xl font-display font-bold text-gray-800">Pistachio</h3>
-                            <div class="badge-circle w-16 h-16 flex-shrink-0">
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-white">1.5g</div>
-                                    <div class="text-xs text-white/90">protein</div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">Nutty richness with natural pistachios</p>
+                        <h3 class="text-2xl font-display font-bold mb-2">Pistachio Protein Balls</h3>
+                        <p class="text-gray-600 mb-4">30g protein • Gluten Free • Sugar Free</p>
                         <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-gray-800">$4.99</span>
-                            <button class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                            <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
+                            <a href="https://wa.me/96176145767?text=I'd like to order Pistachio Protein Balls" target="_blank" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                Order
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Product 2 -->
-                <div class="product-card fade-in" style="transition-delay: 0.1s;">
-                    <div class="aspect-square overflow-hidden">
-                        <img src="IMG_3392.jpg" alt="Chocolate" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                    </div>
+                <!-- Peanut Butter -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.1s;">
+                    <img src="Peanut protein balls.jpg" alt="Peanut Butter Protein Balls" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <div class="flex items-start justify-between mb-3">
-                            <h3 class="text-2xl font-display font-bold text-gray-800">Chocolate</h3>
-                            <div class="badge-circle w-16 h-16 flex-shrink-0">
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-white">1.5g</div>
-                                    <div class="text-xs text-white/90">protein</div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">Rich dark chocolate indulgence</p>
+                        <h3 class="text-2xl font-display font-bold mb-2">Peanut Butter Protein Balls</h3>
+                        <p class="text-gray-600 mb-4">30g protein • Gluten Free • Sugar Free</p>
                         <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-gray-800">$4.99</span>
-                            <button class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                            <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
+                            <a href="https://wa.me/96176145767?text=I'd like to order Peanut Butter Protein Balls" target="_blank" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                Order
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Product 3 -->
-                <div class="product-card fade-in" style="transition-delay: 0.2s;">
-                    <div class="aspect-square overflow-hidden">
-                        <img src="IMG_3420.jpg" alt="Variety Pack" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                    </div>
+                <!-- Coconut Energy Balls -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.2s;">
+                    <img src="Coconut energy balls.jpg" alt="Coconut Energy Balls" class="w-full h-64 object-cover">
                     <div class="p-6">
-                        <div class="flex items-start justify-between mb-3">
-                            <h3 class="text-2xl font-display font-bold text-gray-800">Variety Pack</h3>
-                            <div class="bg-gradient-to-br from-coral to-coral-light w-16 h-16 flex-shrink-0 rounded-full flex items-center justify-center shadow-lg">
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-white">6</div>
-                                    <div class="text-xs text-white/90">flavors</div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 mb-4">Try all our delicious flavors</p>
+                        <h3 class="text-2xl font-display font-bold mb-2">Coconut Energy Balls</h3>
+                        <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
                         <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-gray-800">$24.99</span>
-                            <button class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                            <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
+                            <a href="https://wa.me/96176145767?text=I'd like to order Coconut Energy Balls" target="_blank" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cookie Dough -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.3s;">
+                    <img src="Cookie dough bites.jpg" alt="Cookie Dough Bites" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-display font-bold mb-2">Cookie Dough Bites</h3>
+                        <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
+                            <a href="https://wa.me/96176145767?text=I'd like to order Cookie Dough Bites" target="_blank" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sneakers Date Bites -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.4s;">
+                    <img src="IMG_4944.jpg" alt="Sneakers Date Bites" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-display font-bold mb-2">Sneakers Date Bites</h3>
+                        <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
+                            <a href="https://wa.me/96176145767?text=I'd like to order Sneakers Date Bites" target="_blank" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chocolate -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.5s;">
+                    <img src="IMG_3392.jpg" alt="Chocolate Protein Balls" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-display font-bold mb-2">Dark Chocolate Balls</h3>
+                        <p class="text-gray-600 mb-4">Rich & Decadent • Dairy Free</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
+                            <a href="https://wa.me/96176145767?text=I'd like to order Dark Chocolate Balls" target="_blank" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                Order
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -408,186 +279,202 @@
         </div>
     </section>
 
-    <!-- Ingredients -->
-    <section id="ingredients" class="scroll-section py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 fade-in">
-                <div class="inline-flex items-center gap-2 bg-lime/10 px-4 py-2 rounded-full text-lime-dark font-medium mb-6">
-                    <span class="w-2 h-2 bg-lime rounded-full animate-pulse"></span>
-                    Ingredients
-                </div>
-                <h2 class="text-5xl md:text-6xl font-display font-bold mb-6">
-                    Real Food, <span class="gradient-text">Real Ingredients</span>
-                </h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Every ingredient serves a purpose
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-12 mb-16">
-                <!-- Ingredients List -->
-                <div class="fade-in">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="ingredient-card">
-                            <div class="text-4xl mb-3">🥜</div>
-                            <h4 class="font-bold text-lg mb-1">Peanut Butter</h4>
-                            <p class="text-sm text-gray-600">Protein powerhouse</p>
-                        </div>
-                        <div class="ingredient-card">
-                            <div class="text-4xl mb-3">🌾</div>
-                            <h4 class="font-bold text-lg mb-1">Oat Flour</h4>
-                            <p class="text-sm text-gray-600">Gluten free energy</p>
-                        </div>
-                        <div class="ingredient-card">
-                            <div class="text-4xl mb-3">🍦</div>
-                            <h4 class="font-bold text-lg mb-1">Vanilla</h4>
-                            <p class="text-sm text-gray-600">Natural flavor</p>
-                        </div>
-                        <div class="ingredient-card">
-                            <div class="text-4xl mb-3">🍁</div>
-                            <h4 class="font-bold text-lg mb-1">Maple Syrup</h4>
-                            <p class="text-sm text-gray-600">Sugar free sweetness</p>
-                        </div>
-                        <div class="ingredient-card">
-                            <div class="text-4xl mb-3">🍫</div>
-                            <h4 class="font-bold text-lg mb-1">Dark Chocolate</h4>
-                            <p class="text-sm text-gray-600">Rich & pure</p>
-                        </div>
-                        <div class="ingredient-card">
-                            <div class="text-4xl mb-3">🥥</div>
-                            <h4 class="font-bold text-lg mb-1">Coconut Oil</h4>
-                            <p class="text-sm text-gray-600">Healthy fats</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Nutrition Facts -->
-                <div class="fade-in" style="transition-delay: 0.2s;">
-                    <div class="bg-gradient-to-br from-lime/5 to-coral/5 rounded-3xl p-8 border-2 border-lime/20">
-                        <h3 class="text-2xl font-display font-bold mb-6">Nutrition Facts</h3>
-                        <div class="text-sm text-gray-600 mb-6">
-                            Serving size: 1 bite (approx. 20g)
-                        </div>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span class="font-semibold">Calories</span>
-                                <span class="text-2xl font-bold gradient-text">60</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span>Protein</span>
-                                <span class="font-bold text-lg">1.5g</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span>Fiber</span>
-                                <span class="font-bold text-lg">1.5g</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span>Carbs</span>
-                                <span class="font-bold text-lg">4g</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-gray-200">
-                                <span>Fat</span>
-                                <span class="font-bold text-lg">4g</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span>Sugar</span>
-                                <span class="font-bold text-lg">2g</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Full Screen Close-Up Video Section -->
-    <section class="scroll-section relative overflow-hidden" style="min-height: 100vh;">
-        <!-- Full Screen Background Video -->
-        <video autoplay muted loop playsinline preload="auto" class="absolute top-0 left-0 w-full h-full object-cover">
+    <!-- Video Showcase Section -->
+    <section class="video-background-section relative py-32 overflow-hidden">
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline preload="auto">
             <source src="video-closeup-cropped.mp4" type="video/mp4">
         </video>
-
         <!-- Dark Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
-
-        <div class="max-w-7xl mx-auto px-6 relative z-10 flex items-center min-h-screen">
-            <div class="text-center w-full fade-in">
-                <h2 class="text-6xl md:text-7xl font-display font-bold text-white mb-8 drop-shadow-2xl">
-                    Every Bite,<br/>
-                    <span class="bg-gradient-to-r from-lime-light to-coral-light bg-clip-text text-transparent">
-                        Perfectly Crafted
-                    </span>
-                </h2>
-                <p class="text-2xl text-white/90 max-w-3xl mx-auto drop-shadow-lg">
-                    See the artisan quality in every detail
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Full Screen Single Ball Video Section -->
-    <section class="scroll-section relative overflow-hidden" style="min-height: 100vh;">
-        <!-- Full Screen Background Video -->
-        <video autoplay muted loop playsinline preload="auto" class="absolute top-0 left-0 w-full h-full object-cover">
-            <source src="video-single-cropped.mp4" type="video/mp4">
-        </video>
-
-        <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-br from-coral/40 via-transparent to-lime/30"></div>
-        <div class="absolute inset-0 bg-black/40"></div>
-
-        <div class="max-w-7xl mx-auto px-6 relative z-10 flex items-center min-h-screen">
-            <div class="max-w-2xl fade-in">
-                <div class="bg-black/20 backdrop-blur-md rounded-3xl p-12 border border-white/20">
-                    <h2 class="text-5xl md:text-6xl font-display font-bold text-white mb-6 drop-shadow-2xl">
-                        Handcrafted Excellence
+        <div class="absolute inset-0 bg-black/50 z-1"></div>
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 content-overlay">
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="fade-in">
+                    <div class="inline-block bg-lime/90 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                        ✨ Handcrafted Quality
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+                        Every Detail Matters
                     </h2>
-                    <p class="text-xl text-white/90 mb-8 leading-relaxed">
-                        Each ProBite is individually crafted with care, ensuring perfect taste and nutrition in every bite.
+                    <p class="text-xl text-white/90 mb-12 leading-relaxed">
+                        We meticulously craft each snack with premium ingredients—crushed pistachios, organic dates, pure protein, and superfoods your body craves.
                     </p>
-                    <button class="bg-lime text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-lime-dark transition-all hover:scale-105 shadow-2xl">
-                        Explore Our Process
-                    </button>
+                    <div class="grid md:grid-cols-3 gap-8 text-left">
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                            <svg class="w-8 h-8 text-lime mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <p class="text-white font-semibold">No artificial preservatives or additives</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                            <svg class="w-8 h-8 text-lime mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <p class="text-white font-semibold">Made fresh in small batches in Lebanon</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                            <svg class="w-8 h-8 text-lime mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <p class="text-white font-semibold">Quality tested for purity and nutrition</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA -->
-    <section class="scroll-section py-24 bg-gradient-to-br from-lime via-lime-light to-coral relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blob"></div>
-            <div class="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blob" style="animation-delay: 3s;"></div>
-        </div>
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <div class="fade-in">
-                <h2 class="text-5xl md:text-6xl font-display font-bold text-white mb-6">
-                    Ready to Fuel Your Day?
-                </h2>
-                <p class="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
-                    Join thousands who trust ProBite for clean, delicious protein energy
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                    <button class="bg-white text-lime-dark px-10 py-5 rounded-full font-bold text-lg hover:shadow-xl transition-all hover:scale-105">
-                        Shop All Flavors
-                    </button>
-                    <button class="border-2 border-white text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-lime-dark transition-all">
-                        Subscribe & Save 20%
-                    </button>
+    <!-- Bundles Section -->
+    <section id="bundles" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <div class="inline-block bg-coral/10 text-coral px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    💰 Save More with Bundles
                 </div>
-                <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
-                    <div>
-                        <div class="text-4xl font-display font-bold text-white mb-2">50K+</div>
-                        <div class="text-white/80">Happy Customers</div>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">Bundle Deals</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Mix and match your favorites & save
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Bites Bundle -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-coral/20 fade-in flex flex-col">
+                    <div class="relative">
+                        <img src="Bites bundle  20$ 2 cups cookie dough + 2 cups sneakers date bite.jpg" alt="Bites Bundle" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-coral text-white px-4 py-2 rounded-full font-bold">
+                            Save $4
+                        </div>
                     </div>
-                    <div>
-                        <div class="text-4xl font-display font-bold text-white mb-2">4.9★</div>
-                        <div class="text-white/80">Average Rating</div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-display font-bold mb-2">Bites Bundle</h3>
+                        <p class="text-gray-600 mb-4">
+                            • 2 cups Cookie Dough Bites<br/>
+                            • 2 cups Sneakers Date Bites
+                        </p>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-3xl font-bold text-coral">$20</span>
+                            <span class="text-lg text-gray-400 line-through">$24</span>
+                        </div>
+                        <a href="https://wa.me/96176145767?text=I'd like to order the Bites Bundle ($20)" target="_blank" class="block w-full bg-coral text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-all text-center mt-auto">
+                            Order Bundle
+                        </a>
                     </div>
-                    <div>
-                        <div class="text-4xl font-display font-bold text-white mb-2">1M+</div>
-                        <div class="text-white/80">Bites Sold</div>
+                </div>
+
+                <!-- High Protein Bundle -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-lime/20 fade-in flex flex-col" style="transition-delay: 0.1s;">
+                    <div class="relative">
+                        <img src="High protein energy balls bundle 30$ 2 cups pistachio protein balls, 2 cups peanut butter balls, 2 Coconut protein balls.jpg" alt="High Protein Bundle" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-lime text-white px-4 py-2 rounded-full font-bold">
+                            Save $8
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-display font-bold mb-2">High Protein Bundle</h3>
+                        <p class="text-gray-600 mb-4">
+                            • 2 cups Pistachio Protein Balls<br/>
+                            • 2 cups Peanut Butter Balls<br/>
+                            • 2 cups Coconut Protein Balls
+                        </p>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-3xl font-bold text-lime">$30</span>
+                            <span class="text-lg text-gray-400 line-through">$38</span>
+                        </div>
+                        <a href="https://wa.me/96176145767?text=I'd like to order the High Protein Bundle ($30)" target="_blank" class="block w-full bg-lime text-white px-6 py-3 rounded-full font-semibold hover:bg-lime-dark transition-all text-center mt-auto">
+                            Order Bundle
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mixed Bundle -->
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-lime/20 fade-in flex flex-col" style="transition-delay: 0.2s;">
+                    <div class="relative">
+                        <img src="Mixed bundle 25$ 1 cup Pistashio protein balls, 1 cup peanut protein balls, 1 cup coconut protein balls, 1 cup sneakers date bites, 1 cookie dough bites.jpg" alt="Mixed Bundle" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-lime text-white px-4 py-2 rounded-full font-bold">
+                            Save $7
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-display font-bold mb-2">Mixed Bundle</h3>
+                        <p class="text-gray-600 mb-4">
+                            • 1 cup Pistachio<br/>
+                            • 1 cup Peanut Butter<br/>
+                            • 1 cup Coconut<br/>
+                            • 1 cup Sneakers Date Bites<br/>
+                            • 1 cup Cookie Dough Bites
+                        </p>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-3xl font-bold text-lime">$25</span>
+                            <span class="text-lg text-gray-400 line-through">$32</span>
+                        </div>
+                        <a href="https://wa.me/96176145767?text=I'd like to order the Mixed Bundle ($25)" target="_blank" class="block w-full bg-lime text-white px-6 py-3 rounded-full font-semibold hover:bg-lime-dark transition-all text-center mt-auto">
+                            Order Bundle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story" class="py-20 bg-gradient-to-br from-cream to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <video controls class="rounded-2xl shadow-2xl w-full" poster="">
+                        <source src="video-founder-intro.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="fade-in">
+                    <div class="inline-block bg-lime/10 text-lime-dark px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                        Meet Our Founder
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6">Our Story</h2>
+                    <div class="prose prose-lg text-gray-600">
+                        <p class="mb-4">
+                            ProBite Healthy Snacks was created by <strong class="text-lime-dark">Marie-Joe</strong>, a sweet-tooth founder who wanted treats that tasted amazing but still felt good to eat.
+                        </p>
+                        <p class="mb-4">
+                            After struggling to find snacks that were both delicious and nutritious, she decided to create her own. ProBite is made with clean ingredients, no added sugar, and recipes designed to satisfy cravings without compromise.
+                        </p>
+                        <p>
+                            From protein balls to date bites and cookie dough bites, every ProBite snack is crafted to be <strong class="text-lime-dark">guilt-free, nourishing, and satisfying</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">Get In Touch</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Order via WhatsApp • Cash on Delivery Available
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-gradient-to-br from-lime/10 to-coral/10 rounded-3xl p-12 text-center fade-in">
+                    <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">Order on WhatsApp</h3>
+                    <p class="text-gray-600 mb-6">Chat with us to place your order. We deliver fresh to your door!</p>
+                    <a href="https://wa.me/96176145767" target="_blank" class="inline-block bg-lime text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-lime-dark transition-all mb-4">
+                        Chat Now on WhatsApp
+                    </a>
+                    <div class="text-lg font-semibold text-gray-700">
+                        📱 +961 71 677 224
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <p class="text-sm text-gray-600">💵 Cash on Delivery Available</p>
                     </div>
                 </div>
             </div>
@@ -595,116 +482,60 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-16">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-lime to-coral"></div>
-                        <span class="text-2xl font-display font-bold text-white">ProBite</span>
-                    </div>
-                    <p class="text-sm text-gray-400">Natural protein energy for your active lifestyle</p>
+                    <img src="logo.png" alt="ProBite" class="h-12 w-auto mb-4 brightness-0 invert">
+                    <p class="text-sm">Guilt-free healthy snacks made in Lebanon</p>
                 </div>
                 <div>
-                    <h4 class="font-bold text-white mb-4">Products</h4>
+                    <h4 class="font-bold text-white mb-4">Shop</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-lime transition-colors">All Flavors</a></li>
-                        <li><a href="#" class="hover:text-lime transition-colors">Variety Packs</a></li>
-                        <li><a href="#" class="hover:text-lime transition-colors">Subscriptions</a></li>
+                        <li><a href="#shop" class="hover:text-lime transition-colors">All Products</a></li>
+                        <li><a href="#bundles" class="hover:text-lime transition-colors">Bundles</a></li>
+                        <li><a href="https://wa.me/96176145767" class="hover:text-lime transition-colors">Order on WhatsApp</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-bold text-white mb-4">Company</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-lime transition-colors">About Us</a></li>
-                        <li><a href="#" class="hover:text-lime transition-colors">Our Story</a></li>
-                        <li><a href="#" class="hover:text-lime transition-colors">Contact</a></li>
+                        <li><a href="#story" class="hover:text-lime transition-colors">Our Story</a></li>
+                        <li><a href="#contact" class="hover:text-lime transition-colors">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-white mb-4">Follow Us</h4>
+                    <h4 class="font-bold text-white mb-4">Contact</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-lime transition-colors">Instagram</a></li>
-                        <li><a href="#" class="hover:text-lime transition-colors">Facebook</a></li>
-                        <li><a href="#" class="hover:text-lime transition-colors">Twitter</a></li>
+                        <li>📱 +961 71 677 224</li>
+                        <li>🇱🇧 Made in Lebanon</li>
+                        <li>💵 Cash on Delivery</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-8 text-center text-sm">
-                <p>&copy; 2026 ProBite. All rights reserved. Made with natural ingredients.</p>
+                <p>&copy; 2026 ProBite. All rights reserved. Crafted with love by Marie-Joe.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Auto-play all videos with multiple attempts
-        document.addEventListener('DOMContentLoaded', () => {
-            const videos = document.querySelectorAll('video');
-
-            videos.forEach(video => {
-                video.muted = true;
-
-                const attemptPlay = () => {
-                    video.play()
-                        .then(() => console.log('Video playing:', video.id || 'unnamed'))
-                        .catch(err => console.log('Autoplay blocked:', err));
-                };
-
-                // Try immediately
-                attemptPlay();
-
-                // Try when ready
-                if (video.readyState >= 3) {
-                    attemptPlay();
-                } else {
-                    video.addEventListener('canplay', attemptPlay, { once: true });
-                }
-
-                // Try on user interaction
-                const playOnce = () => {
-                    video.play().catch(() => {});
-                    document.removeEventListener('click', playOnce);
-                    document.removeEventListener('touchstart', playOnce);
-                };
-                document.addEventListener('click', playOnce, { once: true });
-                document.addEventListener('touchstart', playOnce, { once: true });
-            });
-        });
-
-        // Intersection Observer for fade-in
+        // Fade-in on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '50px' });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
 
-        // Smooth parallax on scroll
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const scroll = window.pageYOffset;
-            document.querySelectorAll('.parallax-img').forEach(img => {
-                const speed = img.dataset.speed || 0.5;
-                const yPos = -(scroll * speed);
-                img.style.setProperty('--scroll-offset', `${yPos}px`);
-            });
-            lastScroll = scroll;
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+        // Auto-play videos
+        document.querySelectorAll('video').forEach(video => {
+            video.muted = true;
         });
     </script>
 </body>
