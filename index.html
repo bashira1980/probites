@@ -37,11 +37,48 @@
             transform: translateY(0);
         }
         .product-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: box-shadow 0.3s ease;
+            perspective: 1000px;
         }
         .product-card:hover {
-            transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            min-height: 400px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .product-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front {
+            position: relative;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            width: 100%;
+        }
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #A4D65E 0%, #7CB83D 100%);
+            border-radius: 1rem;
+            overflow: hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .card-back h3 {
+            font-size: 1.125rem;
+            line-height: 1.3;
+        }
+        .card-back p, .card-back div {
+            font-size: 0.75rem;
+            line-height: 1.4;
         }
         .hero-video-container {
             position: absolute;
@@ -100,6 +137,44 @@
             z-index: 1000;
         }
         .modal.active { display: flex; }
+        .card-front .info-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 10;
+        }
+        .card-front .info-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .product-card.flipped .info-icon {
+            display: none !important;
+        }
+        .nutrition-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        .nutrition-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .nutrition-table td:first-child {
+            font-weight: 600;
+        }
+        .nutrition-table td:last-child {
+            text-align: right;
+        }
     </style>
 </head>
 <body class="font-sans bg-white">
@@ -109,8 +184,25 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-20">
                 <a href="#" class="flex items-center">
-                    <img src="logo.png" alt="ProBite" class="h-24 w-auto">
+                    <img src="logo.png" alt="ProBite" class="h-16 sm:h-24 w-auto">
                 </a>
+
+                <!-- Mobile Cart & Menu -->
+                <div class="flex md:hidden items-center gap-4">
+                    <button onclick="openCart()" class="relative text-gray-700 hover:text-lime transition-colors p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span id="cart-count-mobile" class="cart-badge absolute -top-1 -right-1 bg-coral text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-lime p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#shop" class="text-gray-700 hover:text-lime font-medium transition-colors">Shop</a>
                     <a href="#bundles" class="text-gray-700 hover:text-lime font-medium transition-colors">Bundles</a>
@@ -122,6 +214,16 @@
                         </svg>
                         <span id="cart-count" class="cart-badge absolute -top-1 -right-1 bg-coral text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
                     </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#shop" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-lime font-medium transition-colors py-2">Shop</a>
+                    <a href="#bundles" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-lime font-medium transition-colors py-2">Bundles</a>
+                    <a href="#story" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-lime font-medium transition-colors py-2">Our Story</a>
+                    <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-700 hover:text-lime font-medium transition-colors py-2">Contact</a>
                 </div>
             </div>
         </div>
@@ -205,90 +307,320 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Pistachio -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in">
-                    <img src="IMG_3250.jpg" alt="Pistachio Protein Balls" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-display font-bold mb-2">Pistachio Protein Balls</h3>
-                        <p class="text-gray-600 mb-4">30g protein • Gluten Free • Sugar Free</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
-                            <button onclick="addToCart('Pistachio Protein Balls', 10)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                    <div class="card-inner">
+                        <!-- Front -->
+                        <div class="card-front">
+                            <div class="relative">
+                                <img src="IMG_3250.jpg" alt="Pistachio Protein Balls" class="w-full h-64 object-cover">
+                                <button onclick="flipCard(event)" class="info-icon">
+                                    <svg class="w-5 h-5 text-lime" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-display font-bold mb-2">Pistachio Protein Balls</h3>
+                                <p class="text-gray-600 mb-4">30g protein • Gluten Free • Sugar Free</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
+                                    <button onclick="addToCart('Pistachio Protein Balls', 10)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="card-back p-4 text-white">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold">Pistachio Protein Balls</h3>
+                                <button onclick="flipCard(event)" class="text-white hover:text-gray-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-2 mb-2">
+                                <p class="text-xs font-semibold">30G PROTEIN | ZERO ADDED SUGAR</p>
+                            </div>
+                            <div class="bg-white text-gray-900 rounded-lg p-3">
+                                <p class="text-xs mb-1.5">5 Servings per cup 100g | Serving size: 1 ball approx. 20g</p>
+                                <h4 class="font-bold text-xs border-b-2 border-gray-900 pb-1 mb-1.5">NUTRITION FACTS:</h4>
+                                <div class="space-y-0.5 text-xs">
+                                    <div class="flex justify-between"><span class="font-semibold">Calories:</span><span>80</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Protein:</span><span>6 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fiber:</span><span>2 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Carbs:</span><span>11 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fat:</span><span>3 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Sugar:</span><span>6 g</span></div>
+                                </div>
+                                <h4 class="font-bold text-xs mt-2 mb-1">INGREDIENTS:</h4>
+                                <p class="text-xs leading-tight">Khudri dates, Whey Protein Isolate, Coconut Grated, Coconut Flour (Gluten Free), Dark Chocolate.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Peanut Butter -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.1s;">
-                    <img src="Peanut protein balls.jpg" alt="Peanut Butter Protein Balls" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-display font-bold mb-2">Peanut Butter Protein Balls</h3>
-                        <p class="text-gray-600 mb-4">30g protein • Gluten Free • Sugar Free</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
-                            <button onclick="addToCart('Peanut Butter Protein Balls', 10)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="relative">
+                                <img src="Peanut protein balls.jpg" alt="Peanut Butter Protein Balls" class="w-full h-64 object-cover">
+                                <button onclick="flipCard(event)" class="info-icon">
+                                    <svg class="w-5 h-5 text-lime" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-display font-bold mb-2">Peanut Butter Protein Balls</h3>
+                                <p class="text-gray-600 mb-4">30g protein • Gluten Free • Sugar Free</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
+                                    <button onclick="addToCart('Peanut Butter Protein Balls', 10)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back p-4 text-white">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold">Peanut Butter Balls</h3>
+                                <button onclick="flipCard(event)" class="text-white hover:text-gray-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-2 mb-2">
+                                <p class="text-xs font-semibold">30G PROTEIN | ZERO ADDED SUGAR</p>
+                            </div>
+                            <div class="bg-white text-gray-900 rounded-lg p-3">
+                                <p class="text-xs mb-1.5">5 Servings per cup 100g | Serving size: 1 ball approx. 20g</p>
+                                <h4 class="font-bold text-xs border-b-2 border-gray-900 pb-1 mb-1.5">NUTRITION FACTS:</h4>
+                                <div class="space-y-0.5 text-xs">
+                                    <div class="flex justify-between"><span class="font-semibold">Calories:</span><span>80</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Protein:</span><span>6 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fiber:</span><span>2 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Carbs:</span><span>11 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fat:</span><span>3 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Sugar:</span><span>6 g</span></div>
+                                </div>
+                                <h4 class="font-bold text-xs mt-2 mb-1">INGREDIENTS:</h4>
+                                <p class="text-xs leading-tight">Khudri dates, Whey Protein Isolate, Pistachio Butter Oat Flour (Gluten Free), White Chocolate.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Coconut Energy Balls -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.2s;">
-                    <img src="Coconut energy balls.jpg" alt="Coconut Energy Balls" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-display font-bold mb-2">Coconut Energy Balls</h3>
-                        <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
-                            <button onclick="addToCart('Coconut Energy Balls', 8)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="relative">
+                                <img src="Coconut energy balls.jpg" alt="Coconut Energy Balls" class="w-full h-64 object-cover">
+                                <button onclick="flipCard(event)" class="info-icon">
+                                    <svg class="w-5 h-5 text-lime" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-display font-bold mb-2">Coconut Energy Balls</h3>
+                                <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
+                                    <button onclick="addToCart('Coconut Energy Balls', 8)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back p-4 text-white">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold">Coconut Protein Balls</h3>
+                                <button onclick="flipCard(event)" class="text-white hover:text-gray-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-2 mb-2">
+                                <p class="text-xs font-semibold">30G PROTEIN | NO ADDED SUGAR</p>
+                            </div>
+                            <div class="bg-white text-gray-900 rounded-lg p-3">
+                                <p class="text-xs mb-1.5">5 Servings per cup 100g | Serving size: 1 ball approx. 20g</p>
+                                <h4 class="font-bold text-xs border-b-2 border-gray-900 pb-1 mb-1.5">NUTRITION FACTS:</h4>
+                                <div class="space-y-0.5 text-xs">
+                                    <div class="flex justify-between"><span class="font-semibold">Calories:</span><span>80</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Protein:</span><span>6 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fiber:</span><span>2 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Carbs:</span><span>11 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fat:</span><span>1.3 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Sugar:</span><span>6 g</span></div>
+                                </div>
+                                <h4 class="font-bold text-xs mt-2 mb-1">INGREDIENTS:</h4>
+                                <p class="text-xs leading-tight">Khudri dates, Whey Protein Isolate, Coconut Grated, Coconut Flour (Gluten Free), Dark Chocolate.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Cookie Dough -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.3s;">
-                    <img src="Cookie dough bites.jpg" alt="Cookie Dough Bites" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-display font-bold mb-2">Cookie Dough Bites</h3>
-                        <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
-                            <button onclick="addToCart('Cookie Dough Bites', 8)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="relative">
+                                <img src="Cookie dough bites.jpg" alt="Cookie Dough Bites" class="w-full h-64 object-cover">
+                                <button onclick="flipCard(event)" class="info-icon">
+                                    <svg class="w-5 h-5 text-lime" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-display font-bold mb-2">Cookie Dough Bites</h3>
+                                <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
+                                    <button onclick="addToCart('Cookie Dough Bites', 8)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back p-4 text-white">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold">Cookie Dough Bites</h3>
+                                <button onclick="flipCard(event)" class="text-white hover:text-gray-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-2 mb-2">
+                                <p class="text-xs font-semibold">ZERO ADDED SUGAR</p>
+                            </div>
+                            <div class="bg-white text-gray-900 rounded-lg p-3">
+                                <p class="text-xs mb-1.5">5 Servings per cup 100g | Serving size: 1 bite approx. 20g</p>
+                                <h4 class="font-bold text-xs border-b-2 border-gray-900 pb-1 mb-1.5">NUTRITION FACTS:</h4>
+                                <div class="space-y-0.5 text-xs">
+                                    <div class="flex justify-between"><span class="font-semibold">Calories:</span><span>50</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Protein:</span><span>1.5 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fiber:</span><span>1.5 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Carbs:</span><span>4 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fat:</span><span>4 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Sugar:</span><span>2 g</span></div>
+                                </div>
+                                <h4 class="font-bold text-xs mt-2 mb-1">INGREDIENTS:</h4>
+                                <p class="text-xs leading-tight">Peanut Butter, Oat Flour (Gluten Free), Vanilla, Maple Syrup (Sugar Free), Pinch of Salt, Dark Chocolate.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Sneakers Date Bites -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.4s;">
-                    <img src="IMG_4944.jpg" alt="Sneakers Date Bites" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-display font-bold mb-2">Sneakers Date Bites</h3>
-                        <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
-                            <button onclick="addToCart('Sneakers Date Bites', 8)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="relative">
+                                <img src="IMG_4944.jpg" alt="Sneakers Date Bites" class="w-full h-64 object-cover">
+                                <button onclick="flipCard(event)" class="info-icon">
+                                    <svg class="w-5 h-5 text-lime" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-display font-bold mb-2">Sneakers Date Bites</h3>
+                                <p class="text-gray-600 mb-4">60 kcal • Dairy Free • Gluten Free</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-2xl font-bold text-lime">$8 <span class="text-sm text-gray-500">/ cup</span></span>
+                                    <button onclick="addToCart('Sneakers Date Bites', 8)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back p-4 text-white">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold">Sneakers Date Bites</h3>
+                                <button onclick="flipCard(event)" class="text-white hover:text-gray-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-2 mb-2">
+                                <p class="text-xs font-semibold">NO ADDED SUGAR | GLUTEN FREE | DAIRY FREE</p>
+                            </div>
+                            <div class="bg-white text-gray-900 rounded-lg p-4">
+                                <p class="text-xs mb-2">6 Servings per cup 100g<br/>Serving size: 1 bite approx. 20g</p>
+                                <h4 class="font-bold text-xs border-b-2 border-gray-900 pb-1 mb-1.5">NUTRITION FACTS:</h4>
+                                <div class="space-y-0.5 text-xs">
+                                    <div class="flex justify-between"><span class="font-semibold">Calories:</span><span>50</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Protein:</span><span>1.5 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fiber:</span><span>1.3 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Carbs:</span><span>4 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fat:</span><span>3 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Sugar:</span><span>3 g</span></div>
+                                </div>
+                                <h4 class="font-bold text-xs mt-2 mb-1">INGREDIENTS:</h4>
+                                <p class="text-xs leading-tight">Khudri dates, Peanut Butter, Crushed Peanuts, Dark Chocolate.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Chocolate -->
                 <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="transition-delay: 0.5s;">
-                    <img src="IMG_3392.jpg" alt="Chocolate Protein Balls" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-display font-bold mb-2">Dark Chocolate Balls</h3>
-                        <p class="text-gray-600 mb-4">Rich & Decadent • Dairy Free</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
-                            <button onclick="addToCart('Dark Chocolate Balls', 10)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
-                                Add to Cart
-                            </button>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="relative">
+                                <img src="IMG_3392.jpg" alt="Chocolate Protein Balls" class="w-full h-64 object-cover">
+                                <button onclick="flipCard(event)" class="info-icon">
+                                    <svg class="w-5 h-5 text-lime" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-display font-bold mb-2">Dark Chocolate Balls</h3>
+                                <p class="text-gray-600 mb-4">Rich & Decadent • Dairy Free</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-2xl font-bold text-lime">$10 <span class="text-sm text-gray-500">/ cup</span></span>
+                                    <button onclick="addToCart('Dark Chocolate Balls', 10)" class="bg-lime text-white px-6 py-2 rounded-full font-semibold hover:bg-lime-dark transition-colors">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back p-4 text-white">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold">Dark Chocolate Balls</h3>
+                                <button onclick="flipCard(event)" class="text-white hover:text-gray-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-2 mb-2">
+                                <p class="text-xs font-semibold">30G PROTEIN | ZERO ADDED SUGAR</p>
+                            </div>
+                            <div class="bg-white text-gray-900 rounded-lg p-3">
+                                <p class="text-xs mb-1.5">5 Servings per cup 100g | Serving size: 1 ball approx. 20g</p>
+                                <h4 class="font-bold text-xs border-b-2 border-gray-900 pb-1 mb-1.5">NUTRITION FACTS:</h4>
+                                <div class="space-y-0.5 text-xs">
+                                    <div class="flex justify-between"><span class="font-semibold">Calories:</span><span>80</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Protein:</span><span>6 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fiber:</span><span>2 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Carbs:</span><span>11 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Fat:</span><span>3 g</span></div>
+                                    <div class="flex justify-between"><span class="font-semibold">Sugar:</span><span>6 g</span></div>
+                                </div>
+                                <h4 class="font-bold text-xs mt-2 mb-1">INGREDIENTS:</h4>
+                                <p class="text-xs leading-tight">Khudri dates, Whey Protein Isolate, Dark Chocolate, Cocoa Powder (Gluten Free).</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -536,6 +868,36 @@
         </div>
     </footer>
 
+    <!-- Nutrition Info Modal -->
+    <div id="nutritionModal" class="modal items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-2xl font-display font-bold" id="nutrition-title">Nutrition Facts</h2>
+                <button onclick="closeNutrition()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="bg-lime/10 px-4 py-2 rounded-lg mb-4 text-center">
+                    <p class="font-semibold text-gray-700" id="nutrition-tagline"></p>
+                </div>
+                <div class="border-2 border-gray-900 p-4 rounded-lg">
+                    <p class="text-sm text-gray-600 mb-2" id="nutrition-serving"></p>
+                    <h3 class="text-xl font-bold mb-3 border-b-4 border-gray-900 pb-2">NUTRITION FACTS:</h3>
+                    <table class="nutrition-table">
+                        <tbody id="nutrition-facts"></tbody>
+                    </table>
+                    <div class="mt-4 pt-4 border-t-2 border-gray-900">
+                        <h4 class="font-bold text-lg mb-2">INGREDIENTS:</h4>
+                        <p class="text-gray-700" id="nutrition-ingredients"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Shopping Cart Modal -->
     <div id="cartModal" class="modal items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
@@ -612,12 +974,26 @@
         function updateCartUI() {
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             const countEl = document.getElementById('cart-count');
+            const countMobileEl = document.getElementById('cart-count-mobile');
+
             if (count > 0) {
                 countEl.textContent = count;
                 countEl.classList.remove('hidden');
+                if (countMobileEl) {
+                    countMobileEl.textContent = count;
+                    countMobileEl.classList.remove('hidden');
+                }
             } else {
                 countEl.classList.add('hidden');
+                if (countMobileEl) {
+                    countMobileEl.classList.add('hidden');
+                }
             }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
 
         function addToCart(name, price) {
@@ -748,6 +1124,128 @@
 
         // Initialize cart on page load
         updateCartUI();
+
+        // Nutrition Information
+        const nutritionData = {
+            pistachio: {
+                name: 'Pistachio Protein Balls',
+                tagline: '30G PROTEIN | ZERO ADDED SUGAR',
+                serving: '5 Servings per cup 100g | Serving size: 1 ball approx. 20g',
+                facts: {
+                    'Calories': '80',
+                    'Protein': '6 g',
+                    'Fiber': '2 g',
+                    'Carbs': '11 g',
+                    'Fat': '3 g',
+                    'Sugar': '6 g'
+                },
+                ingredients: 'Khudri dates, Whey Protein Isolate, Coconut Grated, Coconut Flour (Gluten Free), Dark Chocolate.'
+            },
+            coconut: {
+                name: 'Coconut Protein Balls',
+                tagline: '30G PROTEIN | NO ADDED SUGAR',
+                serving: '5 Servings per cup 100g | Serving size: 1 ball approx. 20g',
+                facts: {
+                    'Calories': '80',
+                    'Protein': '6 g',
+                    'Fiber': '2 g',
+                    'Carbs': '11 g',
+                    'Fat': '1.3 g',
+                    'Sugar': '6 g'
+                },
+                ingredients: 'Khudri dates, Whey Protein Isolate, Coconut Grated, Coconut Flour (Gluten Free), Dark Chocolate.'
+            },
+            peanut: {
+                name: 'Peanut Butter Protein Balls',
+                tagline: '30G PROTEIN | ZERO ADDED SUGAR',
+                serving: '5 Servings per cup 100g | Serving size: 1 ball approx. 20g',
+                facts: {
+                    'Calories': '80',
+                    'Protein': '6 g',
+                    'Fiber': '2 g',
+                    'Carbs': '11 g',
+                    'Fat': '3 g',
+                    'Sugar': '6 g'
+                },
+                ingredients: 'Khudri dates, Whey Protein Isolate, Pistachio Butter Oat Flour (Gluten Free), White Chocolate.'
+            },
+            cookie: {
+                name: 'Cookie Dough Bites',
+                tagline: 'ZERO ADDED SUGAR',
+                serving: '5 Servings per cup 100g | Serving size: 1 bite approx. 20g',
+                facts: {
+                    'Calories': '50',
+                    'Protein': '1.5 g',
+                    'Fiber': '1.5 g',
+                    'Carbs': '4 g',
+                    'Fat': '4 g',
+                    'Sugar': '2 g'
+                },
+                ingredients: 'Peanut Butter, Oat Flour (Gluten Free), Vanilla, Maple Syrup (Sugar Free), Pinch of Salt, Dark Chocolate.'
+            },
+            sneakers: {
+                name: 'Sneakers Date Bites',
+                tagline: 'NO ADDED SUGAR | GLUTEN FREE | DAIRY FREE',
+                serving: '6 Servings per cup 100g | Serving size: 1 bite approx. 20g',
+                facts: {
+                    'Calories': '50',
+                    'Protein': '1.5 g',
+                    'Fiber': '1.3 g',
+                    'Carbs': '4 g',
+                    'Fat': '3 g',
+                    'Sugar': '3 g'
+                },
+                ingredients: 'Khudri dates, Peanut Butter, Crushed Peanuts, Dark Chocolate.'
+            },
+            chocolate: {
+                name: 'Dark Chocolate Balls',
+                tagline: '30G PROTEIN | ZERO ADDED SUGAR',
+                serving: '5 Servings per cup 100g | Serving size: 1 ball approx. 20g',
+                facts: {
+                    'Calories': '80',
+                    'Protein': '6 g',
+                    'Fiber': '2 g',
+                    'Carbs': '11 g',
+                    'Fat': '3 g',
+                    'Sugar': '6 g'
+                },
+                ingredients: 'Khudri dates, Whey Protein Isolate, Dark Chocolate, Cocoa Powder (Gluten Free).'
+            }
+        };
+
+        function openNutrition(productId) {
+            const data = nutritionData[productId];
+            if (!data) return;
+
+            document.getElementById('nutrition-title').textContent = data.name;
+            document.getElementById('nutrition-tagline').textContent = data.tagline;
+            document.getElementById('nutrition-serving').textContent = data.serving;
+
+            const factsHTML = Object.entries(data.facts).map(([key, value]) =>
+                `<tr><td>${key}:</td><td>${value}</td></tr>`
+            ).join('');
+            document.getElementById('nutrition-facts').innerHTML = factsHTML;
+
+            document.getElementById('nutrition-ingredients').textContent = data.ingredients;
+
+            document.getElementById('nutritionModal').classList.add('active');
+        }
+
+        function closeNutrition() {
+            document.getElementById('nutritionModal').classList.remove('active');
+        }
+
+        // Card Flip
+        function flipCard(event) {
+            event.stopPropagation();
+            const card = event.target.closest('.product-card');
+            card.classList.toggle('flipped');
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('nutritionModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'nutritionModal') closeNutrition();
+        });
     </script>
     <script>
         // Fade-in on scroll
